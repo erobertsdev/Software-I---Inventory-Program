@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="41.0" layoutY="47.0" text="Add Part">
@@ -17,7 +16,7 @@
       </Label>
       <RadioButton layoutX="168.0" layoutY="47.0" mnemonicParsing="false" text="In-House" />
       <RadioButton layoutX="292.0" layoutY="47.0" mnemonicParsing="false" text="Outsourced" />
-      <TextField layoutX="129.0" layoutY="124.0" />
+      <TextField disable="true" layoutX="129.0" layoutY="124.0" />
       <TextField layoutX="129.0" layoutY="163.0" />
       <TextField layoutX="129.0" layoutY="201.0" />
       <TextField layoutX="129.0" layoutY="239.0" />
