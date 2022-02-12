@@ -26,13 +26,14 @@ public class AddPartController {
     @FXML private Button SaveButton;
     @FXML private Button CancelButton;
 
+    /** Event Handlers **/
     @FXML
     public void handleInHouseRadioButton() {
-        MachineCompanyLabel.setText("BOOOOOP");
+        MachineCompanyLabel.setText("Machine ID");
     }
 
     public void handleOutsourcedRadioButton() {
-
+        MachineCompanyLabel.setText("Company Name");
     }
 
     public void handleIDTextField() {
