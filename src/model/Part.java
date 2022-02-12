@@ -1,9 +1,5 @@
 package model;
 
-/**
- *
- * @author Elias Adams-Roberts
- */
 public abstract class Part {
     private int id;
     private String name;
