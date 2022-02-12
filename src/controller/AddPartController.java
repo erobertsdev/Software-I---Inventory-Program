@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class AddPartController {
 
     /** Declare variables for UI components **/
@@ -25,6 +28,47 @@ public class AddPartController {
 
     @FXML
     public void handleInHouseRadioButton() {
-        label.setText("OK Button pressed");
+        MachineCompanyLabel.setText("BOOOOOP");
     }
+
+    public void handleOutsourcedRadioButton() {
+
+    }
+
+    public void handleIDTextField() {
+
+    }
+
+    public void handleNameTextField() {
+
+    }
+
+    public void handleInvTextField() {
+
+    }
+
+    public void handlePriceTextField() {
+
+    }
+
+    public void handleMaxTextField() {
+
+    }
+
+    public void handleMachineIDTextField() {
+
+    }
+
+    public void handleMinTextField() {
+
+    }
+
+    public void handleSaveButton() {
+
+    }
+
+    public void handleCancelButton() {
+
+    }
+
 }
