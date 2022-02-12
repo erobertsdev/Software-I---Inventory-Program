@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <Label layoutX="31.0" layoutY="39.0" text="Inventory Management System">
          <font>
@@ -23,7 +22,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TableView layoutX="15.0" layoutY="44.0" prefHeight="185.0" prefWidth="417.0">
+            <TableView fx:id="PartTable" layoutX="15.0" layoutY="44.0" prefHeight="185.0" prefWidth="417.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="Part ID#" />
                 <TableColumn prefWidth="75.0" text="Part Name" />
@@ -31,10 +30,10 @@
                   <TableColumn prefWidth="117.0" text="Price Cost per Unit" />
               </columns>
             </TableView>
-            <Button layoutX="249.0" layoutY="237.0" mnemonicParsing="false" text="Add" />
-            <Button layoutX="301.0" layoutY="237.0" mnemonicParsing="false" text="Modify" />
-            <Button layoutX="368.0" layoutY="237.0" mnemonicParsing="false" text="Delete" />
-            <TextField layoutX="281.0" layoutY="10.0" promptText="Search by Part ID or #" />
+            <Button fx:id="AddPartButton" layoutX="249.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleAddPartButton" text="Add" />
+            <Button fx:id="ModifyPartButton" layoutX="301.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleModifyPartButton" text="Modify" />
+            <Button fx:id="DeletePartButton" layoutX="368.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleDeletePartButton" text="Delete" />
+            <TextField fx:id="PartSearch" layoutX="281.0" layoutY="10.0" onAction="#handlePartSearch" promptText="Search by Part ID or #" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="487.0" layoutY="76.0" prefHeight="276.0" prefWidth="490.0" style="-fx-border-color: black;">
@@ -44,7 +43,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TableView layoutX="15.0" layoutY="48.0" prefHeight="185.0" prefWidth="461.0">
+            <TableView fx:id="ProductTable" layoutX="15.0" layoutY="48.0" prefHeight="185.0" prefWidth="461.0">
                <columns>
                   <TableColumn prefWidth="83.0" text="Product ID" />
                   <TableColumn prefWidth="105.0" text="Product Name" />
@@ -52,12 +51,12 @@
                   <TableColumn prefWidth="168.0" text="Price Cost per Unit" />
                </columns>
             </TableView>
-            <Button layoutX="291.0" layoutY="244.0" mnemonicParsing="false" text="Add" />
-            <Button layoutX="344.0" layoutY="244.0" mnemonicParsing="false" text="Modify" />
-            <Button layoutX="411.0" layoutY="244.0" mnemonicParsing="false" text="Delete" />
-            <TextField layoutX="321.0" layoutY="15.0" promptText="Search by Product ID or #" />
+            <Button fx:id="AddProductButton" layoutX="291.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleAddProductButton" text="Add" />
+            <Button fx:id="ModifyProductButton" layoutX="344.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleModifyProductButton" text="Modify" />
+            <Button fx:id="DeleteProductButton" layoutX="411.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleDeleteProductButton" text="Delete" />
+            <TextField fx:id="ProductSearch" layoutX="321.0" layoutY="15.0" onAction="#handleProductSearch" promptText="Search by Product ID or #" />
          </children>
       </AnchorPane>
-      <Button layoutX="876.0" layoutY="368.0" mnemonicParsing="false" text="Exit" />
+      <Button fx:id="ExitButton" layoutX="876.0" layoutY="368.0" mnemonicParsing="false" onAction="#handleExitButton" text="Exit" />
    </children>
 </AnchorPane>
