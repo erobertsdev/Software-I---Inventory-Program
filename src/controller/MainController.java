@@ -50,8 +50,11 @@ public class MainController {
 
     }
 
-    public void handleAddProductButton() {
-
+    public void handleAddProductButton(ActionEvent event) throws IOException {
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("..\\view\\AddProductForm.fxml")));
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
     public void handleModifyProductButton() {
