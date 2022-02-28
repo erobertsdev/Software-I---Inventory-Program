@@ -1,13 +1,17 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
+
+import java.io.IOException;
 
 public class MainController {
 
@@ -27,8 +31,11 @@ public class MainController {
 
     /** Event Handlers **/
     @FXML
-    public void handleAddPartButton() {
-
+    public void handleAddPartButton(ActionEvent event) throws IOException {
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("..\\view\\AddPartForm.fxml")));
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
     public void handleModifyPartButton() {
