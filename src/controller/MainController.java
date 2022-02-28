@@ -38,15 +38,19 @@ public class MainController {
         window.show();
     }
 
-    public void handleModifyPartButton() {
+    public void handleModifyPartButton(ActionEvent event) throws IOException {
+        // TODO: Add logic to figure out which part is selected
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("..\\view\\AddPartForm.fxml")));
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+    }
+
+    public void handleDeletePartButton(ActionEvent event) throws IOException {
 
     }
 
-    public void handleDeletePartButton() {
-
-    }
-
-    public void handlePartSearch() {
+    public void handlePartSearch(ActionEvent event) throws IOException {
 
     }
 
@@ -57,19 +61,23 @@ public class MainController {
         window.show();
     }
 
-    public void handleModifyProductButton() {
+    public void handleModifyProductButton(ActionEvent event) throws IOException {
+        // TODO: Add logic to figure out which product is selected
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("..\\view\\ModifyProductForm.fxml")));
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+    }
+
+    public void handleDeleteProductButton(ActionEvent event) throws IOException {
 
     }
 
-    public void handleDeleteProductButton() {
+    public void handleProductSearch(ActionEvent event) throws IOException {
 
     }
 
-    public void handleProductSearch() {
-
-    }
-
-    public void handleExitButton() {
+    public void handleExitButton(ActionEvent event) throws IOException {
 
     }
 }
