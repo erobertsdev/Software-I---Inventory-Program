@@ -1,11 +1,15 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -14,8 +18,10 @@ import model.Part;
 import model.Product;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MainController {
+public class MainController implements Initializable {
 
     /** Declare variables for UI components **/
 
@@ -93,4 +99,22 @@ public class MainController {
     public void handleExitButton(ActionEvent event) throws IOException {
 
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        PartID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        PartName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        PartInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
+        PartPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
+        ProductID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        ProductName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        ProductInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
+        ProductPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
+    }
+
+    // THIS HAS TO BE DONE IN model/Inventory.java YOU MORON
+    // ObservableLists for test data and parts/products
+    ObservableList<Part> observableList= FXCollections.observableArrayList(
+            new Part(1, "Flywheel", 250.00, 5)
+    );
 }
