@@ -1,11 +1,13 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -64,8 +66,13 @@ public class AddPartController {
 
     }
 
-    public void handleSaveButton() {
-
+    public void handleSaveButton(ActionEvent event) throws IOException {
+        String partName = NameTextField.getText();
+        String partInv = InvTextField.getText();
+        String partPrice = PriceTextField.getText();
+        String partMax = MaxTextField.getText();
+        String partMin = MinTextField.getText();
+        String partID = MachineIDTextField.getText();
     }
 
     public void handleCancelButton() {
