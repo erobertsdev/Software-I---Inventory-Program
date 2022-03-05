@@ -112,7 +112,7 @@ public class MainController implements Initializable {
         ProductPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
     }
 
-    // THIS HAS TO BE DONE IN model/Inventory.java YOU MORON
+    // TODO: THIS HAS TO BE DONE IN model/Inventory.java YOU MORON
     // ObservableLists for test data and parts/products
     ObservableList<Part> observableList= FXCollections.observableArrayList(
             new Part(1, "Flywheel", 250.00, 5)
