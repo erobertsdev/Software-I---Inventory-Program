@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
+import model.Inventory;
 import model.Part;
 import model.Product;
 
@@ -102,6 +103,10 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        // TODO: TEST DATA GO HERE THEN
+
+
         PartID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         PartName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         PartInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
@@ -112,9 +117,4 @@ public class MainController implements Initializable {
         ProductPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
     }
 
-    // TODO: THIS HAS TO BE DONE IN model/Inventory.java YOU MORON
-    // ObservableLists for test data and parts/products
-    ObservableList<Part> observableList= FXCollections.observableArrayList(
-            new Part(1, "Flywheel", 250.00, 5)
-    );
 }
