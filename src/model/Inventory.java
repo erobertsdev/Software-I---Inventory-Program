@@ -19,13 +19,34 @@ public class Inventory {
         productObservableList.add(product);
     }
 
+    // Find part by ID
+    public static Part findPartByID(int partID) {
+        Part foundPart = null;
+        for (Part part : partObservableList) {
+            if (partID == part.getId()) {
+                foundPart = part;
+            }
+        }
+        return foundPart;
+    }
 
-    // Return list of parts
+    // Find product by ID
+    public static Product findProductByID(int productID) {
+        Product foundProduct = null;
+        for (Product product : productObservableList) {
+            if (productID == product.getId()) {
+                foundProduct = product;
+            }
+        }
+        return foundProduct;
+    }
+
+    // Return list of all parts
     public static ObservableList<Part> getPartList() {
         return partObservableList;
     }
 
-    // Return list of products
+    // Return list of all products
     public static ObservableList<Product> getProductList() {
         return productObservableList;
     }
