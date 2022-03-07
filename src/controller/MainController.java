@@ -101,12 +101,18 @@ public class MainController implements Initializable {
 
     }
 
+    private static boolean firstTime = true;
+
+    private void addTestData() {
+        if(!firstTime) {
+            return;
+        }
+        firstTime = false;
+        // TODO: Add test parts/products here
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        // TODO: TEST DATA GO HERE THEN
-
-
         PartID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         PartName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         PartInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
