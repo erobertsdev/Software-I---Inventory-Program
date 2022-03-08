@@ -30,6 +30,16 @@ public class Inventory {
         return foundPart;
     }
 
+    public static ObservableList<Part> findPartByName(String partName) {
+        ObservableList<Part> parts = FXCollections.observableArrayList();
+        for (Part part : partObservableList) {
+            if (part.getName().contains(partName)) {
+                parts.add(part);
+            }
+        }
+        return parts;
+    }
+
     // Find product by ID
     public static Product findProductByID(int productID) {
         Product foundProduct = null;
@@ -39,6 +49,16 @@ public class Inventory {
             }
         }
         return foundProduct;
+    }
+
+    public static ObservableList<Product> findProductByName(String productName) {
+        ObservableList<Product> products = FXCollections.observableArrayList();
+        for (Product product : productObservableList){
+            if(product.getName().contains(productName)){
+                products.add(product);
+            }
+        }
+        return products;
     }
 
     // Return list of all parts
