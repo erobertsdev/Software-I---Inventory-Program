@@ -8,33 +8,38 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPartController">
-   <children>
-      <Label layoutX="41.0" layoutY="47.0" text="Add Part">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <RadioButton fx:id="InHouseRadioButton" layoutX="168.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleInHouseRadioButton" selected="true" text="In-House">
-         <toggleGroup>
-            <ToggleGroup fx:id="partGroup" />
-         </toggleGroup></RadioButton>
-      <RadioButton fx:id="OutsourcedRadioButton" layoutX="292.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleOutsourcedRadioButton" text="Outsourced" toggleGroup="$partGroup" />
-      <TextField fx:id="IDTextField" disable="true" layoutX="129.0" layoutY="124.0" onAction="#handleIDTextField" />
-      <TextField fx:id="NameTextField" layoutX="129.0" layoutY="163.0" onAction="#handleNameTextField" />
-      <TextField fx:id="InvTextField" layoutX="129.0" layoutY="201.0" onAction="#handleInvTextField" />
-      <TextField fx:id="PriceTextField" layoutX="129.0" layoutY="239.0" onAction="#handlePriceTextField" />
-      <TextField fx:id="MaxTextField" layoutX="129.0" layoutY="278.0" onAction="#handleMaxTextField" />
-      <TextField fx:id="MachineIDTextField" layoutX="220.0" layoutY="332.0" onAction="#handleMachineIDTextField" />
-      <TextField fx:id="MinTextField" layoutX="365.0" layoutY="278.0" onAction="#handleMinTextField" />
-      <Label layoutX="66.0" layoutY="128.0" text="ID" />
-      <Label layoutX="66.0" layoutY="167.0" text="Name" />
-      <Label layoutX="66.0" layoutY="205.0" text="Inv" />
-      <Label layoutX="66.0" layoutY="243.0" text="Price/Cost" />
-      <Label layoutX="66.0" layoutY="282.0" text="Max" />
-      <Label fx:id="MachineCompanyLabel" layoutX="129.0" layoutY="336.0" text="Machine ID" />
-      <Label layoutX="306.0" layoutY="282.0" text="Min" />
-      <Button fx:id="SaveButton" layoutX="313.0" layoutY="381.0" mnemonicParsing="false" onAction="#handleSaveButton" text="Save" />
-      <Button fx:id="CancelButton" layoutX="375.0" layoutY="381.0" mnemonicParsing="false" onAction="#handleCancelButton" text="Cancel" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.AddPartController">
+   <Label layoutX="41.0" layoutY="47.0" text="Add Part">
+      <font>
+         <Font name="System Bold" size="12.0"/>
+      </font>
+   </Label>
+   <RadioButton fx:id="InHouseRadioButton" layoutX="168.0" layoutY="47.0" mnemonicParsing="false"
+                onAction="#handleInHouseRadioButton" selected="true" text="In-House">
+      <toggleGroup>
+         <ToggleGroup fx:id="partGroup"/>
+      </toggleGroup>
+   </RadioButton>
+   <RadioButton fx:id="OutsourcedRadioButton" layoutX="292.0" layoutY="47.0" mnemonicParsing="false"
+                onAction="#handleOutsourcedRadioButton" text="Outsourced" toggleGroup="$partGroup"/>
+   <TextField fx:id="IDTextField" disable="true" layoutX="129.0" layoutY="124.0" onAction="#handleIDTextField"/>
+   <TextField fx:id="NameTextField" layoutX="129.0" layoutY="163.0" onAction="#handleNameTextField"/>
+   <TextField fx:id="InvTextField" layoutX="129.0" layoutY="201.0" onAction="#handleInvTextField"/>
+   <TextField fx:id="PriceTextField" layoutX="129.0" layoutY="239.0" onAction="#handlePriceTextField"/>
+   <TextField fx:id="MaxTextField" layoutX="129.0" layoutY="278.0" onAction="#handleMaxTextField"/>
+   <TextField fx:id="MachineIDTextField" layoutX="220.0" layoutY="332.0" onAction="#handleMachineIDTextField"/>
+   <TextField fx:id="MinTextField" layoutX="365.0" layoutY="278.0" onAction="#handleMinTextField"/>
+   <Label layoutX="66.0" layoutY="128.0" text="ID"/>
+   <Label layoutX="66.0" layoutY="167.0" text="Name"/>
+   <Label layoutX="66.0" layoutY="205.0" text="Inv"/>
+   <Label layoutX="66.0" layoutY="243.0" text="Price/Cost"/>
+   <Label layoutX="66.0" layoutY="282.0" text="Max"/>
+   <Label fx:id="MachineCompanyLabel" layoutX="129.0" layoutY="336.0" text="Machine ID"/>
+   <Label layoutX="306.0" layoutY="282.0" text="Min"/>
+   <Button fx:id="SaveButton" layoutX="313.0" layoutY="381.0" mnemonicParsing="false" onAction="#handleSaveButton"
+           text="Save"/>
+   <Button fx:id="CancelButton" layoutX="375.0" layoutY="381.0" mnemonicParsing="false" onAction="#handleCancelButton"
+           text="Cancel"/>
 </AnchorPane>

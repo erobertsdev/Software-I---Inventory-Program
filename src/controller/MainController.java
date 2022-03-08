@@ -22,11 +22,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static model.Inventory.getPartList;
+import static model.Inventory.getProductList;
+
 public class MainController implements Initializable {
 
     /** Declare variables for UI components **/
 
-    // TODO: LEFT OFF HERE
     // Parts Pane
     @FXML private TableView<Part> PartTable;
     @FXML private TableColumn<Part, Integer> PartID;
@@ -103,6 +105,10 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        PartTable.setItems(getPartList());
+        ProductTable.setItems(getProductList());
+
+        // Runtime error possibility here, this.PartID is null, there was no fx:id in FXML file
         PartID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         PartName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         PartInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
