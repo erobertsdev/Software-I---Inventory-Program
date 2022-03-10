@@ -3,7 +3,7 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public abstract class Product {
+public class Product {
     private ObservableList<Part> productParts = FXCollections.observableArrayList();
     private int id;
     private String name;
@@ -104,9 +104,9 @@ public abstract class Product {
         this.max = max;
     }
 
-    public void addProductPart(ObservableList<Part> part) {
-        // TODO: Figure out where this addPart is
-        this.productParts.addPart(part);
-    }
+//    public void addProductPart(ObservableList<Part> part) {
+//        // TODO: Figure out where this addPart is
+//        this.productParts.addPart(part);
+//    }
 
 }

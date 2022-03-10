@@ -22,7 +22,7 @@ public class Main extends Application {
         Inventory.addPart(new Outsourced(2, "Turbocharger", 1200.00, 10, 2, 15, 2, "Honeywell"));
 
         // Test Products - broke figure it oot
-//        Inventory.addProduct(new InHouse(1, "Nissan GT-R", 95000.00, 5, 2, 10));
+        Inventory.addProduct(new Product(1, "Nissan GT-R", 95000.00, 5, 2, 10));
 
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainForm.fxml"));
         stage.setTitle("Main Form");
