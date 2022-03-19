@@ -40,6 +40,16 @@ public class Inventory {
         return parts;
     }
 
+    // Modify Part
+    public static void modifyPart(int index, Part selectedPart) {
+        partObservableList.set(index, selectedPart);
+    }
+
+    // Delete Part
+    public static boolean deletePart(Part selectedPart) {
+        return partObservableList.remove(selectedPart);
+    }
+
     // Find product by ID
     public static Product findProductByID(int productID) {
         Product foundProduct = null;
@@ -59,6 +69,16 @@ public class Inventory {
             }
         }
         return products;
+    }
+
+    // Modify Product
+    public static void modifyProduct(int index, Product selectedProduct) {
+        productObservableList.set(index, selectedProduct);
+    }
+
+    // Delete Product
+    public static boolean deleteProduct(Product selectedProduct) {
+        return productObservableList.remove(selectedProduct);
     }
 
     // Return list of all parts
