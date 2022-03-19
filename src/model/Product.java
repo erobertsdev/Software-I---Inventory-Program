@@ -104,9 +104,14 @@ public class Product {
         this.max = max;
     }
 
-//    public void addProductPart(ObservableList<Part> part) {
-//        // TODO: Figure out where this addPart is
-//        this.productParts.addPart(part);
-//    }
+    // Add part to product
+    public void addProductPart(ObservableList<Part> part) {
+        this.productParts.addAll(part);
+    }
+
+    // Return all parts in product
+    public ObservableList<Part> getProductParts() {
+        return productParts;
+    }
 
 }
