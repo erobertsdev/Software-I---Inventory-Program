@@ -19,7 +19,7 @@ public class Main extends Application {
         Inventory.addPart(new InHouse(1, "Flywheel", 250.00, 15, 5, 20, 1));
 
         // Outsourced
-        Inventory.addPart(new Outsourced(2, "Turbocharger", 1200.00, 10, 2, 15, 2, "Honeywell"));
+        Inventory.addPart(new Outsourced(2, "Turbocharger", 1200.00, 10, 2, 15,"Honeywell"));
 
         // Test Products - broke figure it oot
         Inventory.addProduct(new Product(1, "Nissan GT-R", 95000.00, 5, 2, 10));
