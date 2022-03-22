@@ -157,7 +157,7 @@ public class AddPartController {
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("WARNING");
-            alert.setContentText("Some fields contain invalid inputs.");
+            alert.setContentText("Error adding part. Please check inputs for errors.");
             alert.showAndWait();
         }
     }
