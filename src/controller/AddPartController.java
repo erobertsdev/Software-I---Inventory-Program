@@ -15,6 +15,7 @@ import model.Part;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
@@ -150,7 +151,7 @@ public class AddPartController {
                     Inventory.addPart(addOutsourcedPart);
                 }
                 Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                Object scene = FXMLLoader.load(getClass().getResource("..\\view\\MainForm.fxml"));
+                Object scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
                 stage.setScene(new Scene((Parent) scene));
                 stage.show();
             }
@@ -167,7 +168,7 @@ public class AddPartController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Object scene = FXMLLoader.load(getClass().getResource("..\\view\\MainForm.fxml"));
+            Object scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
             stage.setScene(new Scene((Parent) scene));
             stage.show();
         }
