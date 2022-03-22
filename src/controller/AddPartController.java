@@ -149,7 +149,13 @@ public class AddPartController {
     }
 
     public void handleCancelButton() {
-
+        if(MainWindowController.confirmDialog("Cancel?", "Are you sure?")) {
+            stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+            stage.setTitle("Inventory Management System");
+            stage.setScene(new Scene((Parent) scene));
+            stage.show();
+        }
     }
 
 }
