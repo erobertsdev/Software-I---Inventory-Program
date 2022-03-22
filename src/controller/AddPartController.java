@@ -15,27 +15,44 @@ import model.Part;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class AddPartController {
 
-    /** Declare variables for UI components **/
+    /**
+     * Declare variables for UI components
+     **/
 
-    @FXML private RadioButton InHouseRadioButton;
-    @FXML private RadioButton OutsourcedRadioButton;
-    @FXML private TextField IDTextField;
-    @FXML private TextField NameTextField;
-    @FXML private TextField InvTextField;
-    @FXML private TextField PriceTextField;
-    @FXML private TextField MaxTextField;
-    @FXML private TextField MinTextField;
-    @FXML private TextField MachineIDTextField;
-    @FXML private Label MachineCompanyLabel;
-    @FXML private Button SaveButton;
-    @FXML private Button CancelButton;
+    @FXML
+    private RadioButton InHouseRadioButton;
+    @FXML
+    private RadioButton OutsourcedRadioButton;
+    @FXML
+    private TextField IDTextField;
+    @FXML
+    private TextField NameTextField;
+    @FXML
+    private TextField InvTextField;
+    @FXML
+    private TextField PriceTextField;
+    @FXML
+    private TextField MaxTextField;
+    @FXML
+    private TextField MinTextField;
+    @FXML
+    private TextField MachineIDTextField;
+    @FXML
+    private Label MachineCompanyLabel;
+    @FXML
+    private Button SaveButton;
+    @FXML
+    private Button CancelButton;
 
-    /** Event Handlers **/
+    /**
+     * Event Handlers
+     **/
     @FXML
     public void handleInHouseRadioButton() {
         MachineCompanyLabel.setText("Machine ID");
@@ -73,7 +90,7 @@ public class AddPartController {
 
     }
 
-    public static int generateID(){
+    public static int generateID() {
         int newID = 1;
         for (int i = 0; i < Inventory.getPartList().size(); i++) {
             newID++;
@@ -101,21 +118,19 @@ public class AddPartController {
         String machineIDText = MachineIDTextField.getText();
 
         try {
-            if (!isNumeric(partInv)){
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Value must be a number.");
+            if (!isNumeric(partInv)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Inv must be a number.");
                 alert.showAndWait();
-            } else if (!isNumeric(partPrice)){
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Value must be a number.");
+            } else if (!isNumeric(partPrice)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Price is invalid.");
                 alert.showAndWait();
-            }
-            else if (Integer.parseInt(partMin) > Integer.parseInt(partMax)) {
+            } else if (Integer.parseInt(partMin) > Integer.parseInt(partMax)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "MIN value can't be greater than MAX value.");
                 alert.showAndWait();
             } else if (Integer.parseInt(partInv) > Integer.parseInt(partMax) || Integer.parseInt(partInv) < Integer.parseInt(partMin)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory amount must be between minimum and maximum values.");
                 alert.showAndWait();
-            }
-            else {
+            } else {
                 int id = generateID();
                 int inventory = Integer.parseInt(partInv);
                 double cost = Double.parseDouble(partPrice);
@@ -134,13 +149,12 @@ public class AddPartController {
 
                     Inventory.addPart(addOutsourcedPart);
                 }
-                Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                 Object scene = FXMLLoader.load(getClass().getResource("..\\view\\MainForm.fxml"));
                 stage.setScene(new Scene((Parent) scene));
                 stage.show();
             }
-        }
-        catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("WARNING");
             alert.setContentText("Some fields contain invalid inputs.");
@@ -148,14 +162,14 @@ public class AddPartController {
         }
     }
 
-    public void handleCancelButton() {
-        if(MainWindowController.confirmDialog("Cancel?", "Are you sure?")) {
-            stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-            scene = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-            stage.setTitle("Inventory Management System");
+    public void handleCancelButton(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to cancel?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Object scene = FXMLLoader.load(getClass().getResource("..\\view\\MainForm.fxml"));
             stage.setScene(new Scene((Parent) scene));
             stage.show();
         }
     }
-
 }
