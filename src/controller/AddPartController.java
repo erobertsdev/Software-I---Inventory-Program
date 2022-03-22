@@ -73,8 +73,23 @@ public class AddPartController {
 
     }
 
+    public static int generateID(){
+        int newID = 1;
+        for (int i = 0; i < Inventory.getPartList().size(); i++) {
+            newID++;
+        }
+        return newID;
+    }
+
     // Regex to check if certain inputs are numbers
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+
+    public boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        return pattern.matcher(strNum).matches();
+    }
 
     public void handleSaveButton(ActionEvent event) throws IOException {
         String partID = IDTextField.getText();
@@ -85,19 +100,11 @@ public class AddPartController {
         String partMin = MinTextField.getText();
         String machineIDText = MachineIDTextField.getText();
 
-        int ID = 0;
-        ObservableList<Part> allParts = Inventory.getPartList();
-        for (Part part : allParts) {
-            if (part.getId() > ID)
-                ID = part.getId();
-        }
-
         try {
-            if (!(pattern.matcher(partInv).matches())){
+            if (!isNumeric(partInv)){
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Value must be a number.");
                 alert.showAndWait();
-                // TODO: Check if partPrice is a double, this fails if someone adds cents
-            } else if (!(pattern.matcher(partPrice).matches())){
+            } else if (!isNumeric(partPrice)){
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Value must be a number.");
                 alert.showAndWait();
             }
@@ -109,8 +116,7 @@ public class AddPartController {
                 alert.showAndWait();
             }
             else {
-                IDTextField.setText(String.valueOf(++ID));
-                int id = Integer.parseInt(partID);
+                int id = generateID();
                 int inventory = Integer.parseInt(partInv);
                 double cost = Double.parseDouble(partPrice);
                 int max = Integer.parseInt(partMax);
