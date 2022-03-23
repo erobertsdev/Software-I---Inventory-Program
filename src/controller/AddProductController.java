@@ -32,17 +32,12 @@ public class AddProductController implements Initializable {
     @FXML private TableColumn<Part, String> PartName;
     @FXML private TableColumn<Part, Integer> PartInv;
     @FXML private TableColumn<Part, Double> PartPrice;
-    @FXML private Button AddPartButton;
     @FXML private TableView<Part> AssociatedPart;
     @FXML private TableColumn<Product, Integer> AssociatedPartID;
     @FXML private TableColumn<Product, String> AssociatedPartName;
     @FXML private TableColumn<Product, Integer> AssociatedPartInv;
     @FXML private TableColumn<Product, Double> AssociatedPartPrice;
-    @FXML private Button RemovePartButton;
-    @FXML private Button SaveButton;
-    @FXML private Button CancelButton;
     @FXML private TextField SearchTextField;
-    @FXML private Button SearchButton;
     private final ObservableList<Part> associatedPart = FXCollections.observableArrayList();
 
     @Override
@@ -50,14 +45,12 @@ public class AddProductController implements Initializable {
 
         ObservableList<Part> originalPart = Inventory.getPartList();
 
-        //Columns and Table for un-associated parts.
         PartID.setCellValueFactory(new PropertyValueFactory<>("partID"));
         PartName.setCellValueFactory(new PropertyValueFactory<>("name"));
         PartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
         PartPrice.setCellValueFactory(new PropertyValueFactory<>("partCost"));
         PartTable.setItems(originalPart);
 
-        //Columns and Table for associated parts
         AssociatedPartID.setCellValueFactory(new PropertyValueFactory<>("partID"));
         AssociatedPartName.setCellValueFactory(new PropertyValueFactory<>("name"));
         AssociatedPartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -68,7 +61,7 @@ public class AddProductController implements Initializable {
         AssociatedPart.setItems(associatedPart);
     }
 
-    @FXML public void handleSearch(ActionEvent event) {
+    @FXML public void handleSearchButton(ActionEvent event) {
         ObservableList<Part> foundPart = Inventory.findPartByName(SearchTextField.getText());
         if(foundPart.isEmpty()) {
             MainController.confirmDialog("Part Not Found", SearchTextField.getText() + "was not found.");
@@ -77,7 +70,7 @@ public class AddProductController implements Initializable {
         }
     }
 
-    @FXML void handleAddPart(ActionEvent event) {
+    @FXML void handleAddPartButton(ActionEvent event) {
         Part selectedPart = PartTable.getSelectionModel().getSelectedItem();
 
         if(selectedPart != null) {
@@ -92,7 +85,7 @@ public class AddProductController implements Initializable {
     }
 
     @FXML
-    void handleRemovePart(ActionEvent event) {
+    void handleRemovePartButton(ActionEvent event) {
         Part selectedPart = AssociatedPart.getSelectionModel().getSelectedItem();
 
         if(selectedPart != null) {
@@ -108,7 +101,7 @@ public class AddProductController implements Initializable {
         }
     }
 
-    @FXML public void handleCancel(ActionEvent event) throws IOException {
+    @FXML public void handleCancelButton(ActionEvent event) throws IOException {
         if (MainController.confirmDialog("Cancel", "Cancel?")) {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
@@ -118,7 +111,7 @@ public class AddProductController implements Initializable {
         }
     }
 
-    @FXML void handleSave(ActionEvent event) throws IOException {
+    @FXML void handleSaveButton(ActionEvent event) throws IOException {
 
         if (associatedPart.isEmpty()) {
             MainController.infoDialog("Error", "Please add a part", "Product must have at least one part.");
