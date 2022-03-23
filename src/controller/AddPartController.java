@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,13 +10,10 @@ import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
 import model.Outsourced;
-import model.Part;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class AddPartController {
@@ -104,9 +100,9 @@ public class AddPartController {
 
     public boolean isNumeric(String strNum) {
         if (strNum == null) {
-            return false;
+            return true;
         }
-        return pattern.matcher(strNum).matches();
+        return !pattern.matcher(strNum).matches();
     }
 
     public void handleSaveButton(ActionEvent event) throws IOException {
@@ -119,10 +115,10 @@ public class AddPartController {
         String machineIDText = MachineIDTextField.getText();
 
         try {
-            if (!isNumeric(partInv)) {
+            if (isNumeric(partInv)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Inv must be a number.");
                 alert.showAndWait();
-            } else if (!isNumeric(partPrice)) {
+            } else if (isNumeric(partPrice)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Price is invalid.");
                 alert.showAndWait();
             } else if (Integer.parseInt(partMin) > Integer.parseInt(partMax)) {

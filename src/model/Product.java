@@ -20,6 +20,11 @@ public class Product {
         this.max = max;
     }
 
+    // Default Params
+    public Product() {
+        this(0, null, 0.00, 0, 0, 0);
+    }
+
     /**
      * @return the id
      */

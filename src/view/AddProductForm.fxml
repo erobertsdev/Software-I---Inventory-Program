@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="842.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="41.0" layoutY="57.0" text="Add Product">
@@ -16,38 +15,39 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField disable="true" layoutX="113.0" layoutY="117.0" />
-      <TextField layoutX="113.0" layoutY="153.0" />
-      <TextField layoutX="113.0" layoutY="189.0" prefHeight="25.0" prefWidth="72.0" />
-      <TextField layoutX="113.0" layoutY="225.0" prefHeight="25.0" prefWidth="72.0" />
-      <TextField layoutX="113.0" layoutY="263.0" prefHeight="25.0" prefWidth="72.0" />
-      <TextField layoutX="251.0" layoutY="263.0" prefHeight="25.0" prefWidth="72.0" />
-      <TextField layoutX="610.0" layoutY="45.0" prefHeight="25.0" prefWidth="175.0" promptText="Search by Part ID or Name" />
+      <TextField fx:id="ProdNameTextField" disable="true" layoutX="113.0" layoutY="117.0" />
+      <TextField id="ProdNameTextField" fx:id="ProdInvTextField" layoutX="113.0" layoutY="153.0" />
+      <TextField id="ProdInvTextField" fx:id="" layoutX="113.0" layoutY="189.0" prefHeight="25.0" prefWidth="72.0" />
+      <TextField id="ProdPriceTextField" fx:id="" layoutX="113.0" layoutY="225.0" prefHeight="25.0" prefWidth="72.0" />
+      <TextField id="ProdMaxTextField" fx:id="" layoutX="113.0" layoutY="263.0" prefHeight="25.0" prefWidth="72.0" />
+      <TextField id="ProdMinTextField" fx:id="" layoutX="251.0" layoutY="263.0" prefHeight="25.0" prefWidth="72.0" />
+      <TextField id="SearchTextField" fx:id="" layoutX="612.0" layoutY="26.0" prefHeight="25.0" prefWidth="175.0" promptText="Search by Part ID or Name" />
       <Label layoutX="49.0" layoutY="121.0" text="ID" />
       <Label layoutX="49.0" layoutY="157.0" text="Name" />
       <Label layoutX="49.0" layoutY="193.0" text="Inv" />
       <Label layoutX="49.0" layoutY="229.0" text="Price" />
       <Label layoutX="49.0" layoutY="267.0" text="Max" />
       <Label layoutX="207.0" layoutY="267.0" text="Min" />
-      <TableView layoutX="412.0" layoutY="102.0" prefHeight="169.0" prefWidth="404.0">
+      <TableView id="PartTable" layoutX="412.0" layoutY="102.0" prefHeight="169.0" prefWidth="404.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Part ID" />
-          <TableColumn prefWidth="75.0" text="Part Name" />
-            <TableColumn prefWidth="107.0" text="Inventory Level" />
-            <TableColumn prefWidth="146.0" text="Price/Cost per Unit" />
+          <TableColumn id="PartID" prefWidth="75.0" text="Part ID" />
+          <TableColumn id="PartName" prefWidth="75.0" text="Part Name" />
+            <TableColumn id="PartInv" prefWidth="107.0" text="Inventory Level" />
+            <TableColumn id="PartPrice" prefWidth="146.0" text="Price/Cost per Unit" />
         </columns>
       </TableView>
-      <TableView layoutX="412.0" layoutY="318.0" prefHeight="169.0" prefWidth="404.0">
+      <TableView id="AssociatedPart" layoutX="412.0" layoutY="318.0" prefHeight="169.0" prefWidth="404.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="Part ID" />
-            <TableColumn prefWidth="75.0" text="Part Name" />
-            <TableColumn prefWidth="107.0" text="Inventory Level" />
-            <TableColumn prefWidth="146.0" text="Price/Cost per Unit" />
+            <TableColumn id="AssociatedPartID" prefWidth="75.0" text="Part ID" />
+            <TableColumn id="AssociatedPartName" prefWidth="75.0" text="Part Name" />
+            <TableColumn id="AssociatedPartInv" prefWidth="107.0" text="Inventory Level" />
+            <TableColumn id="AssociatedPartPrice" prefWidth="146.0" text="Price/Cost per Unit" />
          </columns>
       </TableView>
-      <Button layoutX="718.0" layoutY="280.0" mnemonicParsing="false" text="Add" />
-      <Button layoutX="658.0" layoutY="496.0" mnemonicParsing="false" text="Remove Associated Part" />
-      <Button layoutX="658.0" layoutY="535.0" mnemonicParsing="false" text="Save" />
-      <Button layoutX="750.0" layoutY="535.0" mnemonicParsing="false" text="Cancel" />
+      <Button id="AddPartButton" layoutX="718.0" layoutY="280.0" mnemonicParsing="false" text="Add" />
+      <Button id="RemovePartButton" layoutX="658.0" layoutY="496.0" mnemonicParsing="false" text="Remove Associated Part" />
+      <Button id="SaveButton" layoutX="658.0" layoutY="535.0" mnemonicParsing="false" text="Save" />
+      <Button id="CancelButton" layoutX="750.0" layoutY="535.0" mnemonicParsing="false" text="Cancel" />
+      <Button id="SearchButton" layoutX="737.0" layoutY="53.0" mnemonicParsing="false" text="Search" />
    </children>
 </AnchorPane>

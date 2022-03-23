@@ -61,6 +61,7 @@ public class Inventory {
         return foundProduct;
     }
 
+    // Find Product by Name
     public static ObservableList<Product> findProductByName(String productName) {
         ObservableList<Product> products = FXCollections.observableArrayList();
         for (Product product : productObservableList){
