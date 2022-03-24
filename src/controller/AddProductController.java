@@ -45,6 +45,7 @@ public class AddProductController implements Initializable {
 
         ObservableList<Part> originalPart = Inventory.getPartList();
 
+        // TODO: FIGURE OUT WHY PARTID IS NULL
         PartID.setCellValueFactory(new PropertyValueFactory<>("partID"));
         PartName.setCellValueFactory(new PropertyValueFactory<>("name"));
         PartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
