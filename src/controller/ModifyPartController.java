@@ -1,125 +1,173 @@
 package controller;
 
+import model.InHouse;
+import model.Outsourced;
+import model.Inventory;
+import model.Part;
+import java.io.IOException;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Part;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class ModifyPartController {
-//
-//    @FXML private RadioButton outsourced;
-//    @FXML private RadioButton inHouse;
-//    @FXML private Label inhouseoroutsourced;
-//    @FXML private TextField ID;
-//    @FXML private TextField Name;
-//    @FXML private TextField Inventory;
-//    @FXML private TextField Price;
-//    @FXML private TextField Maximum;
-//    @FXML private TextField Minimum;
-//    @FXML private TextField companyORmachineID;
-//
-//    private Stage stage;
-//    private Object scene;
-//    public Part selectedPart;
-//    private int partID;
-//
-//    public void radioadd()
-//    {
-//        if (outsourced.isSelected())
-//            this.inhouseoroutsourced.setText("Company Name");
-//        else
-//            this.inhouseoroutsourced.setText("Machine ID");
-//    }
-//
-//    public void setPart(Part selectedPart) {
-//        this.selectedPart = selectedPart;
-//        partID = C482.Model.Inventory.getAllPart().indexOf(selectedPart);
-//        ID.setText(Integer.toString(selectedPart.getPartID()));
-//        Name.setText(selectedPart.getName());
-//        Inventory.setText(Integer.toString(selectedPart.getStock()));
-//        Price.setText(Double.toString(selectedPart.getPartCost()));
-//        Maximum.setText(Integer.toString(selectedPart.getMax()));
-//        Minimum.setText(Integer.toString(selectedPart.getMin()));
-//        if(selectedPart instanceof InHouse){
-//            InHouse ih = (InHouse) selectedPart;
-//            inHouse.setSelected(true);
-//            this.inhouseoroutsourced.setText("Machine ID");
-//            companyORmachineID.setText(Integer.toString(ih.getMachineID()));
-//        }
-//        else{
-//            OutSourced os = (OutSourced) selectedPart;
-//            outsourced.setSelected(true);
-//            this.inhouseoroutsourced.setText("Company Name");
-//            companyORmachineID.setText(os.getCompanyName());
-//        }
-//    }
-//
-//    @FXML void onActionSave(ActionEvent event) throws IOException {
-//        int partInventory = Integer.parseInt(Inventory.getText());
-//        int partMin = Integer.parseInt(Minimum.getText());
-//        int partMax = Integer.parseInt(Maximum.getText());
-//        if (MainWindowController.confirmDialog("Save?", "Would you like to save this part?"))
-//            if (partMax < partMin) {
-//                MainWindowController.infoDialog("Input Error", "Error in min and max field", "Check Min and Max value.");
-//            } else if (partInventory < partMin || partInventory > partMax) {
-//                MainWindowController.infoDialog("Input Error", "Error in inventory field", "Inventory must be between Minimum and Maximum");
-//            } else {
-//                int id = Integer.parseInt(ID.getText());
-//                String name = Name.getText();
-//                double price = Double.parseDouble(Price.getText());
-//                int stock = Integer.parseInt(Inventory.getText());
-//                int min = Integer.parseInt(Minimum.getText());
-//                int max = Integer.parseInt(Maximum.getText());
-//                if (inHouse.isSelected()) {
-//                    try {
-//                        int machineID = Integer.parseInt(companyORmachineID.getText());
-//                        InHouse temp = new InHouse(id, stock, min, max, name, price, machineID);
-//                        C482.Model.Inventory.updatePart(partID, temp);
-//                        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-//                        scene = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-//                        stage.setTitle("Inventory Management System");
-//                        stage.setScene(new Scene((Parent) scene));
-//                        stage.show();
-//                    }
-//                    catch (NumberFormatException e){
-//                        MainWindowController.infoDialog("Input Error", "Check Machine ID ", "Machine ID can only contain numbers 0-9");
-//                    }
-//                }
-//                else {
-//                    String companyName = companyORmachineID.getText();
-//                    OutSourced temp = new OutSourced(id, stock, min, max, name, price, companyName);
-//                    C482.Model.Inventory.updatePart(partID, temp);
-//                    stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-//                    scene = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-//                    stage.setTitle("Inventory Management System");
-//                    stage.setScene(new Scene((Parent) scene));
-//                    stage.show();
-//                }
-//            }
-//    }
-//    @FXML public void onActionCancel(ActionEvent event) throws IOException {
-//        if(MainWindowController.confirmDialog("Cancel?", "Are you sure?")) {
-//            stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-//            scene = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-//            stage.setTitle("Inventory Management System");
-//            stage.setScene(new Scene((Parent) scene));
-//            stage.show();
-//        }
-//    }
-//
-//    @Override
-//    public void initialize(URL location, ResourceBundle resources) {
-//    }
+
+    Part selectedPart;
+    int selectedIndex;
+
+    @FXML private RadioButton InhouseRadioButton;
+    @FXML private RadioButton OutsourcedRadioButton;
+    @FXML private TextField NameInhouseModifyPartText;
+    @FXML private TextField InventoryInhouseModifyPartText;
+    @FXML private TextField PriceCostInhouseModifyPartText;
+    @FXML private TextField MaxInhouseModifyPartText;
+    @FXML private TextField MinInhouseModifyPartText;
+    @FXML private TextField MachineIDInhouseModifyPartText;
+    @FXML private Button CancelButton;
+    @FXML private Button SaveButton;
+    @FXML public void InhouseHandler(ActionEvent event) {
+        machineLabel.setText("Machine ID");
+    }
+    @FXML
+    void InventoryInhouseModifyPartText(ActionEvent event) {
+    }
+    @FXML
+    void MachineIDInhouseModifyPartText(ActionEvent event) {
+    }
+    @FXML
+    void MaxInhouseModifyPartText(ActionEvent event) {
+    }
+    @FXML
+    void MinInhouseModifyPartText(ActionEvent event) {
+    }
+    @FXML
+    private Label machineLabel;
+    @FXML
+    void NameInhouseModifyPartText(ActionEvent event) {
+    }
+    @FXML
+    public void OutsourcedHandler(ActionEvent event) {
+        machineLabel.setText("Company Name");
+    }
+    @FXML
+    public void PriceCostInhouseModifyPartText(ActionEvent event) {
+    }
+
+    @FXML
+    public void cancelHandler(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear all text field " +
+                "values, do you want to continue?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+
+            Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            Object scene = FXMLLoader.load(getClass().getResource("/View/MainScreen.fxml"));
+            stage.setScene(new Scene((Parent) scene));
+            stage.show();
+        }
+    }
+
+    @FXML
+    public void saveHandler(ActionEvent event) throws IOException {
+
+        try {
+            if (!(Integer.class.isInstance(Integer.parseInt(InventoryInhouseModifyPartText.getText())))){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory value you chose needs to be a number.");
+                alert.showAndWait();
+            } else if (!(Double.class.isInstance(Double.parseDouble(PriceCostInhouseModifyPartText.getText())))){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Price value you chose needs to be a number.");
+                alert.showAndWait();
+            }
+            else if (Integer.parseInt(MinInhouseModifyPartText.getText()) > Integer.parseInt(MaxInhouseModifyPartText.getText())) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Min value cannot be greater than Max value.");
+                alert.showAndWait();
+            } else if (Integer.parseInt(InventoryInhouseModifyPartText.getText()) > Integer.parseInt(MaxInhouseModifyPartText.getText()) || Integer.parseInt(InventoryInhouseModifyPartText.getText()) < Integer.parseInt(MinInhouseModifyPartText.getText())) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory amount must be between minimum and maximum values.");
+                alert.showAndWait();
+            }
+            else {
+                int id = selectedPart.getId();
+                String name = NameInhouseModifyPartText.getText();
+                int inventory = Integer.parseInt(InventoryInhouseModifyPartText.getText());
+                double price = Double.parseDouble(PriceCostInhouseModifyPartText.getText());
+                int max = Integer.parseInt(MaxInhouseModifyPartText.getText());
+                int min = Integer.parseInt(MinInhouseModifyPartText.getText());
+
+                if (InhouseRadioButton.isSelected()) {
+
+                    int machineID = Integer.parseInt(MachineIDInhouseModifyPartText.getText());
+
+                    InHouse inhousePart = new InHouse(id, name, price, inventory, min, max, machineID);
+                    Inventory.getPartList().set(selectedIndex, inhousePart);
+                }
+
+                if (OutsourcedRadioButton.isSelected()) {
+
+                    String companyName = MachineIDInhouseModifyPartText.getText();
+
+                    Outsourced outsourcedPart = new Outsourced(id, name, price, inventory, min, max, companyName);
+                    Inventory.getPartList().set(selectedIndex, outsourcedPart);
+                }
+
+                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                Object scene = FXMLLoader.load(getClass().getResource("/View/MainScreen.fxml"));
+                stage.setScene(new Scene((Parent) scene));
+                stage.show();
+            }
+        }
+        catch(NumberFormatException e){
+
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setContentText("Please enter a valid value for each text field.");
+            alert.showAndWait();
+
+        }
+
+    }
+
+    public void setPart(Part part, int index) {
+        selectedPart = part;
+        selectedIndex = index;
+
+        if (part instanceof InHouse) {
+
+            InHouse newPart = (InHouse) part;
+            InhouseRadioButton.setSelected(true);
+            machineLabel.setText("Machine ID");
+            this.NameInhouseModifyPartText.setText(newPart.getName());
+            this.InventoryInhouseModifyPartText.setText((Integer.toString(newPart.getStock())));
+            this.PriceCostInhouseModifyPartText.setText((Double.toString(newPart.getPrice())));
+            this.MinInhouseModifyPartText.setText((Integer.toString(newPart.getMin())));
+            this.MaxInhouseModifyPartText.setText((Integer.toString(newPart.getMax())));
+            this.MachineIDInhouseModifyPartText.setText((Integer.toString(newPart.getMachineID())));
+            Inventory.modifyPart(selectedIndex, newPart);
+
+        }
+
+        if (part instanceof Outsourced) {
+
+            Outsourced newPart = (Outsourced) part;
+            OutsourcedRadioButton.setSelected(true);
+            machineLabel.setText("Company Name");
+            this.NameInhouseModifyPartText.setText(newPart.getName());
+            this.InventoryInhouseModifyPartText.setText((Integer.toString(newPart.getStock())));
+            this.PriceCostInhouseModifyPartText.setText((Double.toString(newPart.getPrice())));
+            this.MinInhouseModifyPartText.setText((Integer.toString(newPart.getMin())));
+            this.MaxInhouseModifyPartText.setText((Integer.toString(newPart.getMax())));
+            this.MachineIDInhouseModifyPartText.setText(newPart.getCompanyName());
+            Inventory.modifyPart(selectedIndex, newPart);
+        }
+    }
 }

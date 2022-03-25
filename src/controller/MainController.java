@@ -104,23 +104,24 @@ public class MainController implements Initializable {
     }
 
     public void handleModifyProductButton(ActionEvent event) throws IOException {
-        try {
-            Product selectedProduct = ProductTable.getSelectionModel().getSelectedItem();
-            if (selectedProduct == null) {
-                return;
-            }
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("..\\view\\ModifyProductForm.fxml"));
-            scene = loader.load();
-            ModifyProductController controller = loader.getController();
-            controller.setProduct(selectedProduct);
-            stage.setScene(new Scene(scene));
-            stage.show();
+        Stage stage;
+        Parent root;
+        stage=(Stage) ModifyPartButton.getScene().getWindow();
+        //load up OTHER FXML document
+        FXMLLoader loader=new FXMLLoader(getClass().getResource(
+                "/View/ModifyPart.fxml"));
 
-        } catch (IOException e) {
-            Logger logger = Logger.getLogger(getClass().getName());
-            logger.log(Level.SEVERE, "An error occurred. Please try again.", e);
+        root =loader.load();
+        ModifyPartController controller = loader.getController();
+        Part part=PartTable.getSelectionModel().getSelectedItem();
+        int index = PartTable.getSelectionModel().getSelectedIndex();
+
+        if(part != null) {
+            controller.setPart(part, index);
         }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void handleDeleteProductButton(ActionEvent event) throws IOException {
@@ -176,7 +177,7 @@ public class MainController implements Initializable {
         PartTable.setItems(getPartList());
         ProductTable.setItems(getProductList());
 
-        // Runtime error possibility here, this.PartID is null, there was no fx:id in FXML file
+        // TODO: Runtime error possibility here, this.PartID is null, there was no fx:id in FXML file
         PartID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         PartName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         PartInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
