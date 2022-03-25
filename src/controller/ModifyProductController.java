@@ -103,7 +103,7 @@ public class ModifyProductController implements Initializable {
                 selectedProduct.addProductPart(associatedPart);
                 model.Inventory.modifyProduct(productID, selectedProduct);
                 stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-                scene = FXMLLoader.load(getClass().getResource("..\\view\\MainForm.fxml"));
+                scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
                 stage.setScene(new Scene((Parent) scene));
                 stage.show();
             }

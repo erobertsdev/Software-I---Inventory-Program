@@ -22,6 +22,7 @@ public class AddProductController implements Initializable {
     private Stage stage;
     private Object scene;
 
+    @FXML private TextField ProdIDTextField;
     @FXML private TextField ProdNameTextField;
     @FXML private TextField ProdInvTextField;
     @FXML private TextField ProdPriceTextField;
