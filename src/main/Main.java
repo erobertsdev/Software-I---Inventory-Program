@@ -10,6 +10,8 @@ import model.Inventory;
 import model.Outsourced;
 import model.Product;
 
+import java.util.Objects;
+
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
@@ -24,8 +26,8 @@ public class Main extends Application {
         // Test Products - broke figure it oot
         Inventory.addProduct(new Product(1, "Nissan GT-R", 95000.00, 5, 2, 10));
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/MainForm.fxml"));
-        stage.setTitle("Main Form");
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/MainForm.fxml")));
+        stage.setTitle("Inventory Management System");
         stage.setScene(new Scene(root));
         stage.show();
     }

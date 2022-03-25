@@ -141,7 +141,7 @@ public class AddProductController implements Initializable {
         //Add Product
         if (MainController.confirmDialog("Save Product", "Save this product?")) {
             Product product = new Product();
-            product.setId(getNewID());
+            product.setId(generateID());
             product.setName(this.ProdNameTextField.getText());
             product.setStock(Integer.parseInt(this.ProdInvTextField.getText()));
             product.setMin(Integer.parseInt(this.ProdMinTextField.getText()));
@@ -158,7 +158,7 @@ public class AddProductController implements Initializable {
         }
     }
 
-    private int getNewID(){
+    private int generateID(){
         int newID = 1;
         for (int i = 0; i < Inventory.getPartList().size(); i++) {
             if (Inventory.getPartList().get(i).getId() == newID) {
