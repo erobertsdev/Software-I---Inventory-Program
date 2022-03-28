@@ -28,7 +28,7 @@
       <Label layoutX="49.0" layoutY="229.0" text="Price" />
       <Label layoutX="49.0" layoutY="267.0" text="Max" />
       <Label layoutX="207.0" layoutY="267.0" text="Min" />
-      <TableView layoutX="412.0" layoutY="102.0" prefHeight="169.0" prefWidth="404.0">
+      <TableView id="PartTable" fx:id="PartTable" layoutX="412.0" layoutY="102.0" prefHeight="169.0" prefWidth="404.0">
         <columns>
           <TableColumn fx:id="PartID" prefWidth="75.0" text="Part ID" />
           <TableColumn fx:id="PartName" prefWidth="75.0" text="Part Name" />
@@ -36,7 +36,7 @@
             <TableColumn fx:id="PartPrice" prefWidth="146.0" text="Price/Cost per Unit" />
         </columns>
       </TableView>
-      <TableView layoutX="412.0" layoutY="318.0" prefHeight="169.0" prefWidth="404.0">
+      <TableView fx:id="AssociatedPartTable" layoutX="412.0" layoutY="318.0" prefHeight="169.0" prefWidth="404.0">
          <columns>
             <TableColumn fx:id="AssociatedPartID" prefWidth="75.0" text="Part ID" />
             <TableColumn fx:id="AssociatedPartName" prefWidth="75.0" text="Part Name" />

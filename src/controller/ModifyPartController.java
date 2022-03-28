@@ -34,9 +34,11 @@ public class ModifyPartController {
     @FXML private TextField MachineIDInhouseModifyPartText;
     @FXML private Button CancelButton;
     @FXML private Button SaveButton;
-    @FXML public void InhouseHandler(ActionEvent event) {
-        machineLabel.setText("Machine ID");
+    @FXML private Label MachineCompanyLabel;
+    @FXML public void handleInHouseRadioButton() {
+        MachineCompanyLabel.setText("Machine ID");
     }
+    @FXML public void handleOutsourcedRadioButton() { MachineCompanyLabel.setText("Company Name"); }
     @FXML
     void InventoryInhouseModifyPartText(ActionEvent event) {
     }
@@ -53,10 +55,6 @@ public class ModifyPartController {
     private Label machineLabel;
     @FXML
     void NameInhouseModifyPartText(ActionEvent event) {
-    }
-    @FXML
-    public void OutsourcedHandler(ActionEvent event) {
-        machineLabel.setText("Company Name");
     }
     @FXML
     public void PriceCostInhouseModifyPartText(ActionEvent event) {

@@ -77,7 +77,7 @@ public class MainController implements Initializable {
             infoDialog("Delete Part", "Error","Please select a part to delete.");
             return;
         }
-        if (confirmDialog("Warning!", "Are you sure you want to delete this part?")){
+        if (confirmDialog("Delete Part", "Are you sure you want to delete this part?")){
             int selectedPart = PartTable.getSelectionModel().getSelectedIndex();
             PartTable.getItems().remove(selectedPart);
         }
@@ -109,7 +109,7 @@ public class MainController implements Initializable {
         stage=(Stage) ModifyPartButton.getScene().getWindow();
         //load up OTHER FXML document
         FXMLLoader loader=new FXMLLoader(getClass().getResource(
-                "/View/ModifyPart.fxml"));
+                "..\\view\\ModifyProductForm.fxml"));
 
         root =loader.load();
         ModifyPartController controller = loader.getController();

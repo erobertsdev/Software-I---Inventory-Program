@@ -23,12 +23,12 @@ import java.util.ResourceBundle;
 public class ModifyProductController implements Initializable {
     private Stage stage;
     private Object scene;
-    @FXML private TableView<Part> PartTableView;
+    @FXML private TableView<Part> PartTable;
     @FXML private TableColumn<Part, Integer> PartID;
     @FXML private TableColumn<Part, String> PartName;
     @FXML private TableColumn<Part, Integer> PartInv;
     @FXML private TableColumn<Part, Double> PartPrice;
-    @FXML private TableView<Part> AssociatedPartTableView;
+    @FXML private TableView<Part> AssociatedPartTable;
     @FXML private TableColumn<Product, Integer> AssociatedPartID;
     @FXML private TableColumn<Product, String> AssociatedPartName;
     @FXML private TableColumn<Product, Integer> AssociatedPartInv;
@@ -67,7 +67,7 @@ public class ModifyProductController implements Initializable {
             alert.setHeaderText("Unable to locate a Part name with: " + SearchField.getText());
             alert.showAndWait();
         } else {
-            PartTableView.setItems(foundPart);
+            PartTable.setItems(foundPart);
         }
     }
 
@@ -110,7 +110,7 @@ public class ModifyProductController implements Initializable {
     }
 
     @FXML void handleAddButton(ActionEvent event) {
-        Part selectedPart = PartTableView.getSelectionModel().getSelectedItem();
+        Part selectedPart = PartTable.getSelectionModel().getSelectedItem();
         if(selectedPart != null) {
             associatedPart.add(selectedPart);
             updateAssociatedPartTable();
@@ -122,7 +122,7 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     void handleRemoveButton(ActionEvent event) {
-        Part selectedPart = AssociatedPartTableView.getSelectionModel().getSelectedItem();
+        Part selectedPart = AssociatedPartTable.getSelectionModel().getSelectedItem();
 
         if(selectedPart != null) {
             MainController.confirmDialog("Deleting Part","Are you sure you want to delete " + selectedPart.getName() + " from the Product?");
@@ -135,11 +135,11 @@ public class ModifyProductController implements Initializable {
     }
 
     public void updatePartTable() {
-        PartTableView.setItems(model.Inventory.getPartList());
+        PartTable.setItems(model.Inventory.getPartList());
     }
 
     private void updateAssociatedPartTable() {
-        AssociatedPartTableView.setItems(associatedPart);
+        AssociatedPartTable.setItems(associatedPart);
     }
 
     @Override
@@ -148,12 +148,12 @@ public class ModifyProductController implements Initializable {
         PartName.setCellValueFactory(new PropertyValueFactory<>("name"));
         PartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
         PartPrice.setCellValueFactory(new PropertyValueFactory<>("partCost"));
-        PartTableView.setItems(model.Inventory.getPartList());
+        PartTable.setItems(model.Inventory.getPartList());
         AssociatedPartID.setCellValueFactory(new PropertyValueFactory<>("partID"));
         AssociatedPartName.setCellValueFactory(new PropertyValueFactory<>("name"));
         AssociatedPartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
         AssociatedPartPrice.setCellValueFactory(new PropertyValueFactory<>("partCost"));
-        AssociatedPartTableView.setItems(associatedPart);
+        AssociatedPartTable.setItems(associatedPart);
 
         updatePartTable();
         updateAssociatedPartTable();

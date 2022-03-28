@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" fx:controller="controller.ModifyPartController" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyPartController">
    <children>
       <Label layoutX="41.0" layoutY="47.0" text="Modify Part">
          <font>
@@ -29,7 +28,7 @@
       <Label layoutX="66.0" layoutY="205.0" text="Inv" />
       <Label layoutX="66.0" layoutY="243.0" text="Price/Cost" />
       <Label layoutX="66.0" layoutY="282.0" text="Max" />
-      <Label layoutX="66.0" layoutY="322.0" text="MachineID" />
+      <Label fx:id="MachineCompanyLabel" layoutX="66.0" layoutY="322.0" text="MachineID" />
       <Label layoutX="306.0" layoutY="282.0" text="Min" />
       <Button layoutX="313.0" layoutY="381.0" mnemonicParsing="false" text="Save" />
       <Button layoutX="375.0" layoutY="381.0" mnemonicParsing="false" text="Cancel" />
