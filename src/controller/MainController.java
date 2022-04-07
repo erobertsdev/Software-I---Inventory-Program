@@ -65,11 +65,16 @@ public class MainController implements Initializable {
     }
 
     public void handleModifyPartButton(ActionEvent event) throws IOException {
-        // TODO: Add logic to figure out which part is selected
-        Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml"))));
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        Part selectedPart = PartTable.getSelectionModel().getSelectedItem();
+        int selectedPartIndex = PartTable.getSelectionModel().getSelectedIndex();
+        if (selectedPart != null) {
+            Inventory.modifyPart(selectedPartIndex, selectedPart);
+            Parent modifyParts = FXMLLoader.load(getClass().getResource("..\\view\\ModifyPartForm.fxml"));
+            Scene scene = new Scene(modifyParts);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        }
     }
 
     public void handleDeletePartButton(ActionEvent event) throws IOException {

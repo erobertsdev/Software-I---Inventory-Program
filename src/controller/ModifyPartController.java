@@ -20,11 +20,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class ModifyPartController {
-
     Part selectedPart;
-    int selectedIndex;
-
-    @FXML private RadioButton InhouseRadioButton;
+    int selectedPartIndex;
+    @FXML private RadioButton InHouseRadioButton;
     @FXML private RadioButton OutsourcedRadioButton;
     @FXML private TextField NameInhouseModifyPartText;
     @FXML private TextField InventoryInhouseModifyPartText;
@@ -52,8 +50,6 @@ public class ModifyPartController {
     void MinInhouseModifyPartText(ActionEvent event) {
     }
     @FXML
-    private Label machineLabel;
-    @FXML
     void NameInhouseModifyPartText(ActionEvent event) {
     }
     @FXML
@@ -69,7 +65,7 @@ public class ModifyPartController {
         if(result.isPresent() && result.get() == ButtonType.OK) {
 
             Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-            Object scene = FXMLLoader.load(getClass().getResource("/View/MainScreen.fxml"));
+            Object scene = FXMLLoader.load(getClass().getResource("..\\view\\MainForm.fxml"));
             stage.setScene(new Scene((Parent) scene));
             stage.show();
         }
@@ -101,12 +97,12 @@ public class ModifyPartController {
                 int max = Integer.parseInt(MaxInhouseModifyPartText.getText());
                 int min = Integer.parseInt(MinInhouseModifyPartText.getText());
 
-                if (InhouseRadioButton.isSelected()) {
+                if (InHouseRadioButton.isSelected()) {
 
                     int machineID = Integer.parseInt(MachineIDInhouseModifyPartText.getText());
 
                     InHouse inhousePart = new InHouse(id, name, price, inventory, min, max, machineID);
-                    Inventory.getPartList().set(selectedIndex, inhousePart);
+                    Inventory.getPartList().set(selectedPartIndex, inhousePart);
                 }
 
                 if (OutsourcedRadioButton.isSelected()) {
@@ -114,11 +110,11 @@ public class ModifyPartController {
                     String companyName = MachineIDInhouseModifyPartText.getText();
 
                     Outsourced outsourcedPart = new Outsourced(id, name, price, inventory, min, max, companyName);
-                    Inventory.getPartList().set(selectedIndex, outsourcedPart);
+                    Inventory.getPartList().set(selectedPartIndex, outsourcedPart);
                 }
 
                 Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                Object scene = FXMLLoader.load(getClass().getResource("/View/MainScreen.fxml"));
+                Object scene = FXMLLoader.load(getClass().getResource("..\\view\\MainForm.fxml"));
                 stage.setScene(new Scene((Parent) scene));
                 stage.show();
             }
@@ -137,20 +133,20 @@ public class ModifyPartController {
 
     public void setPart(Part part, int index) {
         selectedPart = part;
-        selectedIndex = index;
+        selectedPartIndex = index;
 
         if (part instanceof InHouse) {
 
             InHouse newPart = (InHouse) part;
-            InhouseRadioButton.setSelected(true);
-            machineLabel.setText("Machine ID");
+            InHouseRadioButton.setSelected(true);
+            MachineCompanyLabel.setText("Machine ID");
             this.NameInhouseModifyPartText.setText(newPart.getName());
             this.InventoryInhouseModifyPartText.setText((Integer.toString(newPart.getStock())));
             this.PriceCostInhouseModifyPartText.setText((Double.toString(newPart.getPrice())));
             this.MinInhouseModifyPartText.setText((Integer.toString(newPart.getMin())));
             this.MaxInhouseModifyPartText.setText((Integer.toString(newPart.getMax())));
             this.MachineIDInhouseModifyPartText.setText((Integer.toString(newPart.getMachineID())));
-            Inventory.modifyPart(selectedIndex, newPart);
+            Inventory.modifyPart(selectedPartIndex, newPart);
 
         }
 
@@ -158,14 +154,14 @@ public class ModifyPartController {
 
             Outsourced newPart = (Outsourced) part;
             OutsourcedRadioButton.setSelected(true);
-            machineLabel.setText("Company Name");
+            MachineCompanyLabel.setText("Company Name");
             this.NameInhouseModifyPartText.setText(newPart.getName());
             this.InventoryInhouseModifyPartText.setText((Integer.toString(newPart.getStock())));
             this.PriceCostInhouseModifyPartText.setText((Double.toString(newPart.getPrice())));
             this.MinInhouseModifyPartText.setText((Integer.toString(newPart.getMin())));
             this.MaxInhouseModifyPartText.setText((Integer.toString(newPart.getMax())));
             this.MachineIDInhouseModifyPartText.setText(newPart.getCompanyName());
-            Inventory.modifyPart(selectedIndex, newPart);
+            Inventory.modifyPart(selectedPartIndex, newPart);
         }
     }
 }
