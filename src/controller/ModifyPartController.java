@@ -27,8 +27,6 @@ import javafx.stage.Stage;
 public class ModifyPartController implements Initializable {
     Part selectedPart;
     int selectedPartIndex;
-    private Stage stage;
-    private Object scene;
     @FXML private RadioButton InHouseRadioButton;
     @FXML private RadioButton OutsourcedRadioButton;
     @FXML private TextField PartIDTextField;
@@ -78,6 +76,8 @@ public class ModifyPartController implements Initializable {
                 int stock = Integer.parseInt(PartInvTextField.getText());
                 int min = Integer.parseInt(PartMinTextField.getText());
                 int max = Integer.parseInt(PartMaxTextField.getText());
+                Stage stage;
+                Object scene;
                 if (InHouseRadioButton.isSelected()) {
                     try {
                         int machineID = Integer.parseInt(MachineIDTextField.getText());
