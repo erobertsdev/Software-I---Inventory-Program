@@ -39,6 +39,7 @@ public class ModifyPartController implements Initializable {
     @FXML private Button CancelButton;
     @FXML private Button SaveButton;
     @FXML private Label MachineCompanyLabel;
+    private int partID;
     @FXML public void handleInHouseRadioButton() {
         MachineCompanyLabel.setText("Machine ID");
     }
@@ -46,8 +47,7 @@ public class ModifyPartController implements Initializable {
 
     @FXML
     public void handleCancelButton(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear all text field " +
-                "values, do you want to continue?");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Cancel Changes?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK) {
@@ -82,7 +82,7 @@ public class ModifyPartController implements Initializable {
                     try {
                         int machineID = Integer.parseInt(MachineIDTextField.getText());
                         InHouse temp = new InHouse(id, name, price, stock, min, max, machineID);
-                        Inventory.updatePart(Integer.parseInt(PartIDTextField.getText()), temp);
+                        Inventory.updatePart(partID, temp);
                         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                         scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
                         stage.setTitle("Inventory Management System");
@@ -96,7 +96,7 @@ public class ModifyPartController implements Initializable {
                 else {
                     String companyName = MachineIDTextField.getText();
                     Outsourced temp = new Outsourced(id, name, price, stock, min, max, companyName);
-                    Inventory.updatePart(Integer.parseInt(PartIDTextField.getText()), temp);
+                    Inventory.updatePart(partID, temp);
                     stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
                     scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
                     stage.setTitle("Inventory Management System");
@@ -110,6 +110,7 @@ public class ModifyPartController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Part selectedPart = Inventory.getPartList().get(selectedPartIndex);
+        partID = Inventory.getPartList().indexOf(selectedPart);
         PartIDTextField.setText(Integer.toString(selectedPart.getId()));
         PartNameTextField.setText(selectedPart.getName());
         PartInvTextField.setText(Integer.toString(selectedPart.getStock()));
