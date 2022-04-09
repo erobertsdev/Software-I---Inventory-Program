@@ -82,6 +82,16 @@ public class Inventory {
         return productObservableList.remove(selectedProduct);
     }
 
+    // Update Part
+    public static void updatePart(int index, Part selectedPart){
+        partObservableList.set(index, selectedPart);
+    }
+
+    // updateProduct
+    public static void updateProduct(int index, Product newProduct){
+        productObservableList.set(index, newProduct);
+    }
+
     // Return list of all parts
     public static ObservableList<Part> getPartList() {
         return partObservableList;
