@@ -41,6 +41,8 @@ public class MainController implements Initializable {
     @FXML private Button ModifyPartButton;
     @FXML private Button DeletePartButton;
     @FXML private TextField PartSearch;
+    private static Part selectedPart;
+    private static int selectedPartIndex;
     // Products Pane
     @FXML private TableView<Product> ProductTable;
     @FXML private TableColumn<Product, Integer> ProductID;
@@ -65,16 +67,16 @@ public class MainController implements Initializable {
     }
 
     public void handleModifyPartButton(ActionEvent event) throws IOException {
-        Part selectedPart = PartTable.getSelectionModel().getSelectedItem();
-        int selectedPartIndex = PartTable.getSelectionModel().getSelectedIndex();
-        if (selectedPart != null) {
-            Inventory.modifyPart(selectedPartIndex, selectedPart);
-            Parent modifyParts = FXMLLoader.load(getClass().getResource("..\\view\\ModifyPartForm.fxml"));
-            Scene scene = new Scene(modifyParts);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
+        selectedPart = PartTable.getSelectionModel().getSelectedItem();
+        if (selectedPart == null) {
+            return;
         }
+        selectedPartIndex = getPartList().indexOf(selectedPart);
+        Parent modifyParts = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml")));
+        Scene scene = new Scene(modifyParts);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
     public void handleDeletePartButton(ActionEvent event) throws IOException {
@@ -118,11 +120,11 @@ public class MainController implements Initializable {
 
         root =loader.load();
         ModifyPartController controller = loader.getController();
-        Part part=PartTable.getSelectionModel().getSelectedItem();
+        Part part = PartTable.getSelectionModel().getSelectedItem();
         int index = PartTable.getSelectionModel().getSelectedIndex();
 
         if(part != null) {
-            controller.setPart(part, index);
+            Inventory.modifyPart(index, part);
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);
