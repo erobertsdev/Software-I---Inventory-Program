@@ -6,23 +6,23 @@ import javafx.collections.ObservableList;
 public class Inventory {
 
     // ObservableLists for test data and parts/products
-    private static ObservableList<Part> partObservableList = FXCollections.observableArrayList();
-    private static ObservableList<Product> productObservableList = FXCollections.observableArrayList();
+    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     // Add part method
     public static void addPart(Part part) {
-        partObservableList.add(part);
+        allParts.add(part);
     }
 
     // Add product method
     public static void addProduct(Product product) {
-        productObservableList.add(product);
+        allProducts.add(product);
     }
 
     // Find part by ID
     public static Part findPartByID(int partID) {
         Part foundPart = null;
-        for (Part part : partObservableList) {
+        for (Part part : allParts) {
             if (partID == part.getId()) {
                 foundPart = part;
             }
@@ -32,7 +32,7 @@ public class Inventory {
 
     public static ObservableList<Part> findPartByName(String partName) {
         ObservableList<Part> parts = FXCollections.observableArrayList();
-        for (Part part : partObservableList) {
+        for (Part part : allParts) {
             if (part.getName().contains(partName)) {
                 parts.add(part);
             }
@@ -42,18 +42,18 @@ public class Inventory {
 
     // Modify Part
     public static void modifyPart(int index, Part selectedPart) {
-        partObservableList.set(index, selectedPart);
+        allParts.set(index, selectedPart);
     }
 
     // Delete Part
     public static boolean deletePart(Part selectedPart) {
-        return partObservableList.remove(selectedPart);
+        return allParts.remove(selectedPart);
     }
 
     // Find product by ID
     public static Product findProductByID(int productID) {
         Product foundProduct = null;
-        for (Product product : productObservableList) {
+        for (Product product : allProducts) {
             if (productID == product.getId()) {
                 foundProduct = product;
             }
@@ -64,7 +64,7 @@ public class Inventory {
     // Find Product by Name
     public static ObservableList<Product> findProductByName(String productName) {
         ObservableList<Product> products = FXCollections.observableArrayList();
-        for (Product product : productObservableList){
+        for (Product product : allProducts){
             if(product.getName().contains(productName)){
                 products.add(product);
             }
@@ -74,31 +74,31 @@ public class Inventory {
 
     // Modify Product
     public static void modifyProduct(int index, Product selectedProduct) {
-        productObservableList.set(index, selectedProduct);
+        allProducts.set(index, selectedProduct);
     }
 
     // Delete Product
     public static boolean deleteProduct(Product selectedProduct) {
-        return productObservableList.remove(selectedProduct);
+        return allProducts.remove(selectedProduct);
     }
 
     // Update Part
     public static void updatePart(int index, Part selectedPart){
-        partObservableList.set(index, selectedPart);
+        allParts.set(index, selectedPart);
     }
 
     // updateProduct
     public static void updateProduct(int index, Product newProduct){
-        productObservableList.set(index, newProduct);
+        allProducts.set(index, newProduct);
     }
 
     // Return list of all parts
     public static ObservableList<Part> getPartList() {
-        return partObservableList;
+        return allParts;
     }
 
     // Return list of all products
     public static ObservableList<Product> getProductList() {
-        return productObservableList;
+        return allProducts;
     }
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,10 +30,11 @@ import static model.Inventory.getProductList;
 
 public class MainController implements Initializable {
 
-    /** Declare variables for UI components **/
+    private ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     // Parts Pane
-    @FXML private static TableView<Part> PartTable;
+    @FXML private TableView<Part> PartTable;
     @FXML private TableColumn<Part, Integer> PartID;
     @FXML private TableColumn<Part, String> PartName;
     @FXML private TableColumn<Part, Integer> PartInvLevel;
@@ -57,14 +59,6 @@ public class MainController implements Initializable {
 
     private Parent scene;
 
-    public static Part getSelectedPart() {
-        return PartTable.getSelectionModel().getSelectedItem();
-    }
-
-    public static int getSelectedPartIndex() {
-        return PartTable.getSelectionModel().getSelectedIndex();
-    }
-
     @FXML
     public void handleAddPartButton(ActionEvent event) throws IOException {
         Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\AddPartForm.fxml"))));
@@ -88,19 +82,6 @@ public class MainController implements Initializable {
             alert.showAndWait();
         }
     }
-
-    // public void handleModifyPartButton(ActionEvent event) throws IOException {
-    //     Part selectedPart = PartTable.getSelectionModel().getSelectedItem();
-    //     if (selectedPart == null) {
-    //         return;
-    //     }
-    //     int selectedPartIndex = getPartList().indexOf(selectedPart);
-    //     Parent modifyParts = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml")));
-    //     Scene scene = new Scene(modifyParts);
-    //     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    //     window.setScene(scene);
-    //     window.show();
-    // }
 
     public void handleDeletePartButton(ActionEvent event) throws IOException {
         if (PartTable.getSelectionModel().isEmpty()){
@@ -202,35 +183,20 @@ public class MainController implements Initializable {
         alert.showAndWait();
     }
 
-//    @Override public void initialize(URL location, ResourceBundle resources) {
-//        PartID.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        PartName.setCellValueFactory(new PropertyValueFactory<>("name"));
-////        PartInStock.setCellValueFactory(new PropertyValueFactory<>("inStock"));
-//        PartPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-////        PartMin.setCellValueFactory(new PropertyValueFactory<>("min"));
-////        PartMax.setCellValueFactory(new PropertyValueFactory<>("max"));
-//        ProductID.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        ProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
-////        ProductInStock.setCellValueFactory(new PropertyValueFactory<>("inStock"));
-//        ProductPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-//        PartTable.setItems(getPartList());
-//        ProductTable.setItems(getProductList());
-//    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // TODO: Runtime error possibility here, controller.MainController.PartTable is null, there was no fx:id in FXML file
+        PartTable.setItems(allParts);
+        ProductTable.setItems(allProducts);
 
-     @Override
-     public void initialize(URL url, ResourceBundle resourceBundle) {
-         PartTable.setItems(getPartList());
-         ProductTable.setItems(getProductList());
+        PartID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        PartName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        PartInvLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        PartPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-         // TODO: Runtime error possibility here, this.PartID is null, there was no fx:id in FXML file
-         PartID.setCellValueFactory(new PropertyValueFactory<>("Id"));
-         PartName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-         PartInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
-         PartPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
-         ProductID.setCellValueFactory(new PropertyValueFactory<>("Id"));
-         ProductName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-         ProductInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
-         ProductPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
-     }
-
+        ProductID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        ProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        ProductInvLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        ProductPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+    }
 }
