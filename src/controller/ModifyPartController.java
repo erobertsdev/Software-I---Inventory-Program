@@ -24,9 +24,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import static controller.MainController.getPartIndex;
+
 public class ModifyPartController implements Initializable {
-    Part selectedPart;
-    int selectedPartIndex;
+
     @FXML private RadioButton InHouseRadioButton;
     @FXML private RadioButton OutsourcedRadioButton;
     @FXML private TextField PartIDTextField;
@@ -44,6 +45,13 @@ public class ModifyPartController implements Initializable {
         MachineCompanyLabel.setText("Machine ID");
     }
     @FXML public void handleOutsourcedRadioButton() { MachineCompanyLabel.setText("Company Name"); }
+
+    private static Part selectedPart;
+    int selectedPartIndex = getPartIndex();
+
+    public static void getPart(Part part) {
+        selectedPart = part;
+    }
 
     @FXML
     public void handleCancelButton(ActionEvent event) throws IOException {
@@ -109,9 +117,9 @@ public class ModifyPartController implements Initializable {
      // Possible error: Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.PartIDTextField" is null
      @Override
      public void initialize(URL url, ResourceBundle rb) {
-         Part selectedPart = Inventory.getPartList().get(selectedPartIndex);
-         partID = selectedPart.getId();
-         PartIDTextField.setText(Integer.toString(selectedPart.getId()));
+         Part part = Inventory.getPartList().get(selectedPartIndex);
+         partID = Inventory.getPartList().get(selectedPartIndex).getId();
+         PartIDTextField.setText(Integer.toString(partID));
          PartNameTextField.setText(selectedPart.getName());
          PartInvTextField.setText(Integer.toString(selectedPart.getStock()));
          PartPriceTextField.setText(Double.toString(selectedPart.getPrice()));

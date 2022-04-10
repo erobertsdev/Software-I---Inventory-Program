@@ -22,18 +22,13 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static model.Inventory.getPartList;
 import static model.Inventory.getProductList;
 
 public class MainController implements Initializable {
 
-    private ObservableList<Part> allParts = FXCollections.observableArrayList();
-    private ObservableList<Product> allProducts = FXCollections.observableArrayList();
-
-    // Parts Pane
+    // Parts Table
     @FXML private TableView<Part> PartTable;
     @FXML private TableColumn<Part, Integer> PartID;
     @FXML private TableColumn<Part, String> PartName;
@@ -43,7 +38,7 @@ public class MainController implements Initializable {
     @FXML private Button ModifyPartButton;
     @FXML private Button DeletePartButton;
     @FXML private TextField PartSearch;
-    // Products Pane
+    // Products Table
     @FXML private TableView<Product> ProductTable;
     @FXML private TableColumn<Product, Integer> ProductID;
     @FXML private TableColumn<Product, String> ProductName;
@@ -55,9 +50,12 @@ public class MainController implements Initializable {
     @FXML private TextField ProductSearch;
     @FXML private Button ExitButton;
 
-    /** Event Handlers **/
-
     private Parent scene;
+    private static int selectedPartIndex;
+
+    public static int getPartIndex() {
+        return selectedPartIndex;
+    }
 
     @FXML
     public void handleAddPartButton(ActionEvent event) throws IOException {
@@ -68,18 +66,25 @@ public class MainController implements Initializable {
     }
 
     public void handleModifyPartButton(ActionEvent event) throws IOException {
-        Part selectedPart = PartTable.getSelectionModel().getSelectedItem();
-        if (selectedPart != null) {
-            Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml"))));
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("No Part Selected");
-            alert.setContentText("Please select a part to modify.");
-            alert.showAndWait();
+        Part selectedPart = (Part) PartTable.getSelectionModel().getSelectedItem();
+        selectedPartIndex = getPartList().indexOf(selectedPart);
+
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml")));
+            if (selectedPart != null) {
+                Stage stage = new Stage();
+                stage.setTitle("Modify Part");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("No Part Selected");
+                alert.setContentText("Please select a part to modify.");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
