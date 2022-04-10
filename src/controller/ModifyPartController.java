@@ -106,23 +106,43 @@ public class ModifyPartController implements Initializable {
             }
     }
 
-    // Possible error: Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.PartIDTextField" is null
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        Part selectedPart = Inventory.getPartList().get(selectedPartIndex);
-        partID = Inventory.getPartList().indexOf(selectedPart);
+    @Override public void initialize(URL url, ResourceBundle resourceBundle) {
+        selectedPart = MainController.getSelectedPart();
+        selectedPartIndex = MainController.getSelectedPartIndex();
+        partID = selectedPart.getId();
         PartIDTextField.setText(Integer.toString(selectedPart.getId()));
         PartNameTextField.setText(selectedPart.getName());
-        PartInvTextField.setText(Integer.toString(selectedPart.getStock()));
         PartPriceTextField.setText(Double.toString(selectedPart.getPrice()));
-        PartMaxTextField.setText(Integer.toString(selectedPart.getMax()));
+        PartInvTextField.setText(Integer.toString(selectedPart.getStock()));
         PartMinTextField.setText(Integer.toString(selectedPart.getMin()));
+        PartMaxTextField.setText(Integer.toString(selectedPart.getMax()));
         if (selectedPart instanceof InHouse) {
             InHouseRadioButton.setSelected(true);
             MachineIDTextField.setText(Integer.toString(((InHouse) selectedPart).getMachineID()));
-        } else {
+        }
+        else {
             OutsourcedRadioButton.setSelected(true);
             MachineIDTextField.setText(((Outsourced) selectedPart).getCompanyName());
         }
     }
+
+    // Possible error: Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.PartIDTextField" is null
+    // @Override
+    // public void initialize(URL url, ResourceBundle rb) {
+    //     Part selectedPart = Inventory.getPartList().get(selectedPartIndex);
+    //     partID = selectedPart.getId();
+    //     PartIDTextField.setText(Integer.toString(selectedPart.getId()));
+    //     PartNameTextField.setText(selectedPart.getName());
+    //     PartInvTextField.setText(Integer.toString(selectedPart.getStock()));
+    //     PartPriceTextField.setText(Double.toString(selectedPart.getPrice()));
+    //     PartMaxTextField.setText(Integer.toString(selectedPart.getMax()));
+    //     PartMinTextField.setText(Integer.toString(selectedPart.getMin()));
+    //     if (selectedPart instanceof InHouse) {
+    //         InHouseRadioButton.setSelected(true);
+    //         MachineIDTextField.setText(Integer.toString(((InHouse) selectedPart).getMachineID()));
+    //     } else {
+    //         OutsourcedRadioButton.setSelected(true);
+    //         MachineIDTextField.setText(((Outsourced) selectedPart).getCompanyName());
+    //     }
+    // }
 }

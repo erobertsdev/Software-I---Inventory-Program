@@ -32,7 +32,7 @@ public class MainController implements Initializable {
     /** Declare variables for UI components **/
 
     // Parts Pane
-    @FXML private TableView<Part> PartTable;
+    @FXML private static TableView<Part> PartTable;
     @FXML private TableColumn<Part, Integer> PartID;
     @FXML private TableColumn<Part, String> PartName;
     @FXML private TableColumn<Part, Integer> PartInvLevel;
@@ -56,6 +56,15 @@ public class MainController implements Initializable {
     /** Event Handlers **/
 
     private Parent scene;
+
+    public static Part getSelectedPart() {
+        return PartTable.getSelectionModel().getSelectedItem();
+    }
+
+    public static int getSelectedPartIndex() {
+        return PartTable.getSelectionModel().getSelectedIndex();
+    }
+
     @FXML
     public void handleAddPartButton(ActionEvent event) throws IOException {
         Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\AddPartForm.fxml"))));
@@ -66,16 +75,32 @@ public class MainController implements Initializable {
 
     public void handleModifyPartButton(ActionEvent event) throws IOException {
         Part selectedPart = PartTable.getSelectionModel().getSelectedItem();
-        if (selectedPart == null) {
-            return;
+        if (selectedPart != null) {
+            Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml"))));
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No Part Selected");
+            alert.setContentText("Please select a part to modify.");
+            alert.showAndWait();
         }
-        int selectedPartIndex = getPartList().indexOf(selectedPart);
-        Parent modifyParts = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml")));
-        Scene scene = new Scene(modifyParts);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
     }
+
+    // public void handleModifyPartButton(ActionEvent event) throws IOException {
+    //     Part selectedPart = PartTable.getSelectionModel().getSelectedItem();
+    //     if (selectedPart == null) {
+    //         return;
+    //     }
+    //     int selectedPartIndex = getPartList().indexOf(selectedPart);
+    //     Parent modifyParts = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml")));
+    //     Scene scene = new Scene(modifyParts);
+    //     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    //     window.setScene(scene);
+    //     window.show();
+    // }
 
     public void handleDeletePartButton(ActionEvent event) throws IOException {
         if (PartTable.getSelectionModel().isEmpty()){
@@ -177,20 +202,35 @@ public class MainController implements Initializable {
         alert.showAndWait();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        PartTable.setItems(getPartList());
-        ProductTable.setItems(getProductList());
+//    @Override public void initialize(URL location, ResourceBundle resources) {
+//        PartID.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        PartName.setCellValueFactory(new PropertyValueFactory<>("name"));
+////        PartInStock.setCellValueFactory(new PropertyValueFactory<>("inStock"));
+//        PartPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+////        PartMin.setCellValueFactory(new PropertyValueFactory<>("min"));
+////        PartMax.setCellValueFactory(new PropertyValueFactory<>("max"));
+//        ProductID.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        ProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
+////        ProductInStock.setCellValueFactory(new PropertyValueFactory<>("inStock"));
+//        ProductPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+//        PartTable.setItems(getPartList());
+//        ProductTable.setItems(getProductList());
+//    }
 
-        // TODO: Runtime error possibility here, this.PartID is null, there was no fx:id in FXML file
-        PartID.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        PartName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        PartInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
-        PartPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
-        ProductID.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        ProductName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        ProductInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
-        ProductPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
-    }
+     @Override
+     public void initialize(URL url, ResourceBundle resourceBundle) {
+         PartTable.setItems(getPartList());
+         ProductTable.setItems(getProductList());
+
+         // TODO: Runtime error possibility here, this.PartID is null, there was no fx:id in FXML file
+         PartID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+         PartName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+         PartInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
+         PartPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
+         ProductID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+         ProductName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+         ProductInvLevel.setCellValueFactory(new PropertyValueFactory<>("Stock"));
+         ProductPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
+     }
 
 }
