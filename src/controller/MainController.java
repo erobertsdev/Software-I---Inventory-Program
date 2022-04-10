@@ -186,8 +186,8 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // TODO: Runtime error possibility here, controller.MainController.PartTable is null, there was no fx:id in FXML file
-        PartTable.setItems(allParts);
-        ProductTable.setItems(allProducts);
+        PartTable.setItems(getPartList());
+        ProductTable.setItems(getProductList());
 
         PartID.setCellValueFactory(new PropertyValueFactory<>("id"));
         PartName.setCellValueFactory(new PropertyValueFactory<>("name"));
