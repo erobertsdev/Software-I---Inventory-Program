@@ -47,14 +47,9 @@ public class ModifyPartController implements Initializable {
     @FXML
     private TextField MachineIDTextField;
     @FXML
-    private Button CancelButton;
-    @FXML
-    private Button SaveButton;
-    @FXML
     private Label MachineCompanyLabel;
     private Part selectedPart;
     private static int selectedPartIndex;
-    private int partID;
 
     @FXML
     public void handleInHouseRadioButton() {
@@ -126,19 +121,16 @@ public class ModifyPartController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         selectedPart = getSelectedPart();
         selectedPartIndex = getSelectedPartIndex();
-
         if (selectedPart instanceof InHouse) {
-             InHouseRadioButton.setSelected(true);
+            InHouseRadioButton.setSelected(true);
             MachineCompanyLabel.setText("Machine ID");
             MachineIDTextField.setText(String.valueOf(((InHouse) selectedPart).getMachineID()));
         }
-
         if (selectedPart instanceof Outsourced) {
             OutsourcedRadioButton.setSelected(true);
             MachineCompanyLabel.setText("Company");
             MachineIDTextField.setText(String.valueOf(((Outsourced) selectedPart).getCompanyName()));
         }
-
         PartIDTextField.setText(String.valueOf(selectedPart.getId()));
         PartNameTextField.setText(String.valueOf(selectedPart.getName()));
         PartPriceTextField.setText(String.valueOf(selectedPart.getPrice()));
