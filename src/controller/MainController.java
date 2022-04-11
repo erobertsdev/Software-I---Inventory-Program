@@ -49,12 +49,16 @@ public class MainController implements Initializable {
     @FXML private Button DeleteProductButton;
     @FXML private TextField ProductSearch;
     @FXML private Button ExitButton;
-
+    private static Part selectedPart;
+    public static Product selectedProduct;
     private Parent scene;
-    private static int selectedPartIndex;
 
-    public static int getPartIndex() {
-        return selectedPartIndex;
+    public static Part getSelectedPart() {
+        return selectedPart;
+    }
+
+    public static Product getSelectedProduct() {
+        return selectedProduct;
     }
 
     @FXML
@@ -66,12 +70,11 @@ public class MainController implements Initializable {
     }
 
     public void handleModifyPartButton(ActionEvent event) throws IOException {
-        Part selectedPart = (Part) PartTable.getSelectionModel().getSelectedItem();
-        selectedPartIndex = getPartList().indexOf(selectedPart);
+        selectedPart = PartTable.getSelectionModel().getSelectedItem();
 
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml")));
             if (selectedPart != null) {
+                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml")));
                 Stage stage = new Stage();
                 stage.setTitle("Modify Part");
                 stage.setScene(new Scene(root));

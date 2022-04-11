@@ -1,10 +1,8 @@
 package controller;
 
 import javafx.fxml.Initializable;
-import model.InHouse;
-import model.Outsourced;
-import model.Inventory;
-import model.Part;
+import model.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -24,43 +22,56 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import static controller.MainController.getPartIndex;
+import static controller.MainController.getSelectedPart;
 
 public class ModifyPartController implements Initializable {
 
-    @FXML private RadioButton InHouseRadioButton;
-    @FXML private RadioButton OutsourcedRadioButton;
-    @FXML private TextField PartIDTextField;
-    @FXML private TextField PartNameTextField;
-    @FXML private TextField PartInvTextField;
-    @FXML private TextField PartPriceTextField;
-    @FXML private TextField PartMaxTextField;
-    @FXML private TextField PartMinTextField;
-    @FXML private TextField MachineIDTextField;
-    @FXML private Button CancelButton;
-    @FXML private Button SaveButton;
-    @FXML private Label MachineCompanyLabel;
+    @FXML
+    private RadioButton InHouseRadioButton;
+    @FXML
+    private RadioButton OutsourcedRadioButton;
+    @FXML
+    private TextField PartIDTextField;
+    @FXML
+    private TextField PartNameTextField;
+    @FXML
+    private TextField PartInvTextField;
+    @FXML
+    private TextField PartPriceTextField;
+    @FXML
+    private TextField PartMaxTextField;
+    @FXML
+    private TextField PartMinTextField;
+    @FXML
+    private TextField MachineIDTextField;
+    @FXML
+    private Button CancelButton;
+    @FXML
+    private Button SaveButton;
+    @FXML
+    private Label MachineCompanyLabel;
+    private Part selectedPart;
     private int partID;
-    @FXML public void handleInHouseRadioButton() {
+
+    @FXML
+    public void handleInHouseRadioButton() {
         MachineCompanyLabel.setText("Machine ID");
     }
-    @FXML public void handleOutsourcedRadioButton() { MachineCompanyLabel.setText("Company Name"); }
 
-    private static Part selectedPart;
-    int selectedPartIndex = getPartIndex();
-
-    public static void getPart(Part part) {
-        selectedPart = part;
+    @FXML
+    public void handleOutsourcedRadioButton() {
+        MachineCompanyLabel.setText("Company Name");
     }
+
 
     @FXML
     public void handleCancelButton(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Cancel Changes?");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.OK) {
+        if (result.isPresent() && result.get() == ButtonType.OK) {
 
-            Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             Object scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
             stage.setScene(new Scene((Parent) scene));
             stage.show();
@@ -96,16 +107,14 @@ public class ModifyPartController implements Initializable {
                         stage.setTitle("Inventory Management System");
                         stage.setScene(new Scene((Parent) scene));
                         stage.show();
-                    }
-                    catch (NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         MainController.infoDialog("Error", "Invalid Machine ID", "Machine ID can only contain numbers.");
                     }
-                }
-                else {
+                } else {
                     String companyName = MachineIDTextField.getText();
                     Outsourced temp = new Outsourced(id, name, price, stock, min, max, companyName);
                     Inventory.updatePart(partID, temp);
-                    stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+                    stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                     scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
                     stage.setTitle("Inventory Management System");
                     stage.setScene(new Scene((Parent) scene));
@@ -114,23 +123,28 @@ public class ModifyPartController implements Initializable {
             }
     }
 
-     // Possible error: Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.PartIDTextField" is null
-     @Override
-     public void initialize(URL url, ResourceBundle rb) {
-         Part part = Inventory.getPartList().get(selectedPartIndex);
-         partID = Inventory.getPartList().get(selectedPartIndex).getId();
-         PartIDTextField.setText(Integer.toString(partID));
-         PartNameTextField.setText(selectedPart.getName());
-         PartInvTextField.setText(Integer.toString(selectedPart.getStock()));
-         PartPriceTextField.setText(Double.toString(selectedPart.getPrice()));
-         PartMaxTextField.setText(Integer.toString(selectedPart.getMax()));
-         PartMinTextField.setText(Integer.toString(selectedPart.getMin()));
-         if (selectedPart instanceof InHouse) {
-             InHouseRadioButton.setSelected(true);
-             MachineIDTextField.setText(Integer.toString(((InHouse) selectedPart).getMachineID()));
-         } else {
-             OutsourcedRadioButton.setSelected(true);
-             MachineIDTextField.setText(((Outsourced) selectedPart).getCompanyName());
-         }
-     }
+    // Possible error: Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.PartIDTextField" is null
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        selectedPart = getSelectedPart();
+
+        if (selectedPart instanceof InHouse) {
+//             inHouseTgl.setSelected(true);
+            MachineCompanyLabel.setText("Machine ID");
+            MachineIDTextField.setText(String.valueOf(((InHouse) selectedPart).getMachineID()));
+        }
+
+        if (selectedPart instanceof Outsourced) {
+//             outsourcedTgl.setSelected(true);
+            MachineCompanyLabel.setText("Company Name");
+            MachineIDTextField.setText(String.valueOf(((Outsourced) selectedPart).getCompanyName()));
+        }
+
+        PartIDTextField.setText(String.valueOf(selectedPart.getId()));
+        PartNameTextField.setText(String.valueOf(selectedPart.getName()));
+        PartPriceTextField.setText(String.valueOf(selectedPart.getPrice()));
+        PartInvTextField.setText(String.valueOf(selectedPart.getStock()));
+        PartMaxTextField.setText(String.valueOf(selectedPart.getMax()));
+        PartMinTextField.setText(String.valueOf(selectedPart.getMin()));
+    }
 }
