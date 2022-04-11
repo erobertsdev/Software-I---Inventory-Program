@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import model.*;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import static controller.MainController.getSelectedPart;
+import static controller.MainController.getSelectedPartIndex;
 
 public class ModifyPartController implements Initializable {
 
@@ -51,6 +53,7 @@ public class ModifyPartController implements Initializable {
     @FXML
     private Label MachineCompanyLabel;
     private Part selectedPart;
+    private static int selectedPartIndex;
     private int partID;
 
     @FXML
@@ -60,17 +63,15 @@ public class ModifyPartController implements Initializable {
 
     @FXML
     public void handleOutsourcedRadioButton() {
-        MachineCompanyLabel.setText("Company Name");
+        MachineCompanyLabel.setText("Company");
     }
 
 
     @FXML
     public void handleCancelButton(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Cancel Changes?");
-
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             Object scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
             stage.setScene(new Scene((Parent) scene));
@@ -80,63 +81,61 @@ public class ModifyPartController implements Initializable {
 
     @FXML
     public void handleSaveButton(ActionEvent event) throws IOException {
-        int partInventory = Integer.parseInt(PartInvTextField.getText());
+        int partId = selectedPart.getId();
+        int partIndex = selectedPartIndex;
+        String partName = PartNameTextField.getText();
+        Double partPrice = Double.parseDouble(PartPriceTextField.getText());
+        int partInv = Integer.parseInt(PartInvTextField.getText());
         int partMin = Integer.parseInt(PartMinTextField.getText());
         int partMax = Integer.parseInt(PartMaxTextField.getText());
-        if (MainController.confirmDialog("Confirm Changes", "Save this part?"))
-            if (partMax < partMin) {
-                MainController.infoDialog("Error", "Max less than Min", "Max must be greater than Min.");
-            } else if (partInventory < partMin || partInventory > partMax) {
-                MainController.infoDialog("Error", "Inventory Number Incorrect", "Inventory must be between Min and Max.");
-            } else {
-                int id = Integer.parseInt(PartIDTextField.getText());
-                String name = PartNameTextField.getText();
-                double price = Double.parseDouble(PartPriceTextField.getText());
-                int stock = Integer.parseInt(PartInvTextField.getText());
-                int min = Integer.parseInt(PartMinTextField.getText());
-                int max = Integer.parseInt(PartMaxTextField.getText());
-                Stage stage;
-                Object scene;
-                if (InHouseRadioButton.isSelected()) {
-                    try {
-                        int machineID = Integer.parseInt(MachineIDTextField.getText());
-                        InHouse temp = new InHouse(id, name, price, stock, min, max, machineID);
-                        Inventory.updatePart(partID, temp);
-                        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                        scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
-                        stage.setTitle("Inventory Management System");
-                        stage.setScene(new Scene((Parent) scene));
-                        stage.show();
-                    } catch (NumberFormatException e) {
-                        MainController.infoDialog("Error", "Invalid Machine ID", "Machine ID can only contain numbers.");
-                    }
-                } else {
-                    String companyName = MachineIDTextField.getText();
-                    Outsourced temp = new Outsourced(id, name, price, stock, min, max, companyName);
-                    Inventory.updatePart(partID, temp);
-                    stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                    scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
-                    stage.setTitle("Inventory Management System");
-                    stage.setScene(new Scene((Parent) scene));
+        int machineId;
+        String companyName;
+        if (partName.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Part name cannot be empty.");
+            Optional<ButtonType> result = alert.showAndWait();
+        } else if ((partMin < partMax) && (partInv > partMin) && (partInv < partMax)) {
+            if (InHouseRadioButton.isSelected()) {
+                try {
+                    machineId = Integer.parseInt(MachineIDTextField.getText());
+                    InHouse modifyInHouse = new InHouse(partId, partName, partPrice, partInv, partMin, partMax, machineId);
+                    Inventory.updatePart(partIndex, modifyInHouse);
+                    Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
+                    Scene scene = new Scene(parent);
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(scene);
                     stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+            if (OutsourcedRadioButton.isSelected()) {
+                companyName = MachineIDTextField.getText();
+                Outsourced newOutsourced = new Outsourced(partId, partName, partPrice, partInv, partMin, partMax, companyName);
+                Inventory.updatePart(partIndex, newOutsourced);
+                Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
     }
 
     // Possible error: Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.PartIDTextField" is null
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         selectedPart = getSelectedPart();
+        selectedPartIndex = getSelectedPartIndex();
 
         if (selectedPart instanceof InHouse) {
-//             inHouseTgl.setSelected(true);
+             InHouseRadioButton.setSelected(true);
             MachineCompanyLabel.setText("Machine ID");
             MachineIDTextField.setText(String.valueOf(((InHouse) selectedPart).getMachineID()));
         }
 
         if (selectedPart instanceof Outsourced) {
-//             outsourcedTgl.setSelected(true);
-            MachineCompanyLabel.setText("Company Name");
+            OutsourcedRadioButton.setSelected(true);
+            MachineCompanyLabel.setText("Company");
             MachineIDTextField.setText(String.valueOf(((Outsourced) selectedPart).getCompanyName()));
         }
 
