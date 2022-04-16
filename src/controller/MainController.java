@@ -79,10 +79,10 @@ public class MainController implements Initializable {
         selectedPartIndex = getPartList().indexOf(selectedPart);
         try {
             if (selectedPart != null) {
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml")));
-                Stage stage = new Stage();
-                stage.setTitle("Modify Part");
-                stage.setScene(new Scene(root));
+                Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyPartForm.fxml")));
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
                 stage.show();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -121,10 +121,11 @@ public class MainController implements Initializable {
     }
 
     public void handleAddProductButton(ActionEvent event) throws IOException {
-        Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\AddProductForm.fxml"))));
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\AddProductForm.fxml")));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void handleModifyProductButton(ActionEvent event) throws IOException {
@@ -159,6 +160,7 @@ public class MainController implements Initializable {
         }
     }
 
+    // TODO: Fix product search
     public void handleProductSearch(ActionEvent event) throws IOException {
         ObservableList<Product> productSearchText = Inventory.findProductByName(ProductSearch.getText());
         if(productSearchText.isEmpty()) {

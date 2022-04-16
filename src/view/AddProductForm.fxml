@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="842.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddProductController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="842.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddProductController">
    <children>
       <Label layoutX="41.0" layoutY="57.0" text="Add Product">
          <font>
@@ -31,7 +31,7 @@
       <TableView id="PartTable" fx:id="PartTable" layoutX="412.0" layoutY="102.0" prefHeight="169.0" prefWidth="404.0">
         <columns>
           <TableColumn id="PartID" fx:id="PartID" prefWidth="75.0" text="Part ID" />
-          <TableColumn id="PartName" prefWidth="75.0" text="Part Name" />
+          <TableColumn id="PartName" fx:id="PartName" prefWidth="75.0" text="Part Name" />
             <TableColumn id="PartInv" fx:id="PartInv" prefWidth="107.0" text="Inventory Level" />
             <TableColumn id="PartPrice" fx:id="PartPrice" prefWidth="146.0" text="Price/Cost per Unit" />
         </columns>
@@ -44,7 +44,7 @@
             <TableColumn id="AssociatedPartPrice" fx:id="AssociatedPartPrice" prefWidth="146.0" text="Price/Cost per Unit" />
          </columns>
       </TableView>
-      <Button id="AddPartButton" layoutX="718.0" layoutY="280.0" mnemonicParsing="false" onAction="#handleAddPartButton" text="Add" />
+      <Button id="AddPartButton" fx:id="AddButton" layoutX="718.0" layoutY="280.0" mnemonicParsing="false" onAction="#handleAddPartButton" text="Add" />
       <Button id="RemovePartButton" fx:id="RemoveButton" layoutX="658.0" layoutY="496.0" mnemonicParsing="false" onAction="#handleRemovePartButton" text="Remove Associated Part" />
       <Button id="SaveButton" fx:id="SaveButton" layoutX="658.0" layoutY="535.0" mnemonicParsing="false" onAction="#handleSaveButton" text="Save" />
       <Button id="CancelButton" fx:id="CancelButton" layoutX="750.0" layoutY="535.0" mnemonicParsing="false" onAction="#handleCancelButton" text="Cancel" />

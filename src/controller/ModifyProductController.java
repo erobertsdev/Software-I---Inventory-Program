@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Inventory;
 import model.Part;
 import model.Product;
 
@@ -36,8 +37,8 @@ public class ModifyProductController implements Initializable {
     @FXML private TextField NameTextField;
     @FXML private TextField InvTextField;
     @FXML private TextField PriceTextField;
-    @FXML private TextField MaximumTextField;
-    @FXML private TextField MinimumTextField;
+    @FXML private TextField MaxTextField;
+    @FXML private TextField MinTextField;
     @FXML private TextField IDTextField;
     @FXML private TextField SearchField;
     private Product selectedProduct;
@@ -47,13 +48,13 @@ public class ModifyProductController implements Initializable {
 
     public void setProduct(Product selectedProduct) {
         this.selectedProduct = selectedProduct;
-        productID = model.Inventory.getProductList().indexOf(selectedProduct);
+        productID = Inventory.getProductList().indexOf(selectedProduct);
         IDTextField.setText(Integer.toString(selectedProduct.getId()));
         NameTextField.setText(selectedProduct.getName());
         InvTextField.setText(Integer.toString(selectedProduct.getStock()));
         PriceTextField.setText(Double.toString(selectedProduct.getPrice()));
-        MaximumTextField.setText(Integer.toString(selectedProduct.getMax()));
-        MinimumTextField.setText(Integer.toString(selectedProduct.getMin()));
+        MaxTextField.setText(Integer.toString(selectedProduct.getMax()));
+        MinTextField.setText(Integer.toString(selectedProduct.getMin()));
         associatedPart.addAll(selectedProduct.getProductParts());
     }
 
@@ -82,8 +83,8 @@ public class ModifyProductController implements Initializable {
 
     @FXML void handleSaveButton(ActionEvent event) throws IOException {
         int productInventory = Integer.parseInt(InvTextField.getText());
-        int productMinimum = Integer.parseInt(MinimumTextField.getText());
-        int productMaximum = Integer.parseInt(MaximumTextField.getText());
+        int productMinimum = Integer.parseInt(MinTextField.getText());
+        int productMaximum = Integer.parseInt(MaxTextField.getText());
         if(MainController.confirmDialog("Save?", "Would you like to save this part?"))
             if(productMaximum < productMinimum) {
                 MainController.infoDialog("Input Error", "Error in min and max field", "Check Min and Max value." );
@@ -97,8 +98,8 @@ public class ModifyProductController implements Initializable {
                 selectedProduct.setName(NameTextField.getText());
                 selectedProduct.setStock(Integer.parseInt(InvTextField.getText()));
                 selectedProduct.setPrice(Double.parseDouble(PriceTextField.getText()));
-                selectedProduct.setMax(Integer.parseInt(MaximumTextField.getText()));
-                selectedProduct.setMin(Integer.parseInt(MinimumTextField.getText()));
+                selectedProduct.setMax(Integer.parseInt(MaxTextField.getText()));
+                selectedProduct.setMin(Integer.parseInt(MinTextField.getText()));
                 selectedProduct.getProductParts().clear();
                 selectedProduct.addProductPart(associatedPart);
                 model.Inventory.modifyProduct(productID, selectedProduct);

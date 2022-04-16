@@ -109,6 +109,10 @@ public class Product {
         this.max = max;
     }
 
+    public void addPart(Part part) {
+        productParts.add(part);
+    }
+
     // Add part to product
     public void addProductPart(ObservableList<Part> part) {
         this.productParts.addAll(part);

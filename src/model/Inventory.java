@@ -8,6 +8,8 @@ public class Inventory {
     // ObservableLists for test data and parts/products
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    private static int partId = 0;
+    private static int prodId = 0;
 
     // Add part method
     public static void addPart(Part part) {
@@ -100,5 +102,13 @@ public class Inventory {
     // Return list of all products
     public static ObservableList<Product> getProductList() {
         return allProducts;
+    }
+
+    public static int generatePartId() {
+        return ++partId;
+    }
+
+    public static int generateProductId() {
+        return ++prodId;
     }
 }
