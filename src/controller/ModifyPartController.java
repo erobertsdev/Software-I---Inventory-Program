@@ -53,11 +53,15 @@ public class ModifyPartController implements Initializable {
 
     @FXML
     public void handleInHouseRadioButton() {
+        InHouseRadioButton.setSelected(true);
+        OutsourcedRadioButton.setSelected(false);
         MachineCompanyLabel.setText("Machine ID");
     }
 
     @FXML
     public void handleOutsourcedRadioButton() {
+        InHouseRadioButton.setSelected(false);
+        OutsourcedRadioButton.setSelected(true);
         MachineCompanyLabel.setText("Company");
     }
 
@@ -100,7 +104,8 @@ public class ModifyPartController implements Initializable {
                     stage.setScene(scene);
                     stage.show();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please double check all inputs.");
+                    Optional<ButtonType> result = alert.showAndWait();
                 }
             }
             if (OutsourcedRadioButton.isSelected()) {

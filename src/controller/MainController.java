@@ -129,24 +129,20 @@ public class MainController implements Initializable {
     }
 
     public void handleModifyProductButton(ActionEvent event) throws IOException {
-        Stage stage;
-        Parent root;
-        stage=(Stage) ModifyPartButton.getScene().getWindow();
-        //load up OTHER FXML document
-        FXMLLoader loader=new FXMLLoader(getClass().getResource(
-                "..\\view\\ModifyProductForm.fxml"));
-
-        root =loader.load();
-        ModifyPartController controller = loader.getController();
-        Part part = PartTable.getSelectionModel().getSelectedItem();
-        int index = PartTable.getSelectionModel().getSelectedIndex();
-
-        if(part != null) {
-            Inventory.modifyPart(index, part);
+        selectedProduct = ProductTable.getSelectionModel().getSelectedItem();
+        if (selectedProduct == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.setTitle("No Product Selected");
+            alert.setHeaderText("Select a product to modify.");
+            alert.showAndWait();
+        } else {
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\ModifyProductForm.fxml")));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
         }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void handleDeleteProductButton(ActionEvent event) throws IOException {

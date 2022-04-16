@@ -43,7 +43,7 @@ public class ModifyProductController implements Initializable {
     @FXML private TextField SearchField;
     private Product selectedProduct;
     private Product modifyProduct;
-    private final ObservableList<Part> associatedPart = FXCollections.observableArrayList();
+    private ObservableList<Part> associatedPart = FXCollections.observableArrayList();
     private int productID;
 
     public void setProduct(Product selectedProduct) {
@@ -145,18 +145,25 @@ public class ModifyProductController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        PartID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        selectedProduct = MainController.getSelectedProduct();
+        associatedPart = selectedProduct.getProductParts();
+
+        PartID.setCellValueFactory(new PropertyValueFactory<>("id"));
         PartName.setCellValueFactory(new PropertyValueFactory<>("name"));
         PartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        PartPrice.setCellValueFactory(new PropertyValueFactory<>("partCost"));
-        PartTable.setItems(model.Inventory.getPartList());
-        AssociatedPartID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        PartPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        PartTable.setItems(Inventory.getPartList());
+
+        AssociatedPartID.setCellValueFactory(new PropertyValueFactory<>("id"));
         AssociatedPartName.setCellValueFactory(new PropertyValueFactory<>("name"));
         AssociatedPartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        AssociatedPartPrice.setCellValueFactory(new PropertyValueFactory<>("partCost"));
+        AssociatedPartPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         AssociatedPartTable.setItems(associatedPart);
 
-        updatePartTable();
-        updateAssociatedPartTable();
+        NameTextField.setText(selectedProduct.getName());
+        PriceTextField.setText(String.valueOf(selectedProduct.getPrice()));
+        InvTextField.setText(String.valueOf(selectedProduct.getStock()));
+        MinTextField.setText(String.valueOf(selectedProduct.getMin()));
+        MaxTextField.setText(String.valueOf(selectedProduct.getMax()));
     }
 }

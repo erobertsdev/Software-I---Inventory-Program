@@ -73,12 +73,11 @@ public class AddProductController implements Initializable {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Fields cannot be empty");
-//            alert.setHeaderText("Fields cannot be empty");
-//            alert.setContentText("Please fill out all fields.");
-//            alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please fill out all fields.");
+            alert.showAndWait();
         }
 
     }
