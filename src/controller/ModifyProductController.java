@@ -79,7 +79,7 @@ public class ModifyProductController implements Initializable {
         String productMax = MaxTextField.getText();
         try {
                 Product newProduct = new Product();
-                newProduct.setId(productID);
+                newProduct.setId(productIndex + 1);
                 newProduct.setName(productName);
                 newProduct.setPrice(Double.parseDouble(productPrice));
                 newProduct.setStock(Integer.parseInt(productInv));
@@ -99,27 +99,6 @@ public class ModifyProductController implements Initializable {
             alert.setContentText("Please check all fields.");
             alert.showAndWait();
         }
-//        int productInventory = Integer.parseInt(InvTextField.getText());
-//        int productMinimum = Integer.parseInt(MinTextField.getText());
-//        int productMaximum = Integer.parseInt(MaxTextField.getText());
-//        if(MainController.confirmDialog("Save?", "Would you like to save your changes?"))
-//            if(productMaximum < productMinimum) {
-//                MainController.infoDialog("Input Error", "Error in min and max field", "Check Min and Max value." );
-//            }
-//            else if(productInventory < productMinimum || productInventory > productMaximum) {
-//                MainController.infoDialog("Input Error", "Error in inventory field", "Inventory must be between Minimum and Maximum" );
-//            }
-//            else {
-//                selectedProduct.setName(NameTextField.getText());
-//                selectedProduct.setStock(Integer.parseInt(InvTextField.getText()));
-//                selectedProduct.setPrice(Double.parseDouble(PriceTextField.getText()));
-//                selectedProduct.setMax(Integer.parseInt(MaxTextField.getText()));
-//                selectedProduct.setMin(Integer.parseInt(MinTextField.getText()));
-//                selectedProduct.getProductParts().clear();
-//                selectedProduct.addProductPart(associatedPart);
-//                model.Inventory.modifyProduct(productID, selectedProduct);
-
-//            }
     }
 
     @FXML void handleAddButton(ActionEvent event) {
