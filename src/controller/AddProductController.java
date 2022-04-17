@@ -41,10 +41,10 @@ public class AddProductController implements Initializable {
     public TableColumn<Part, String> AssociatedPartName;
     public TableColumn<Part, Integer> AssociatedPartInv;
     public TableColumn<Part, Double> AssociatedPartPrice;
+    int productId = Inventory.allProducts.size() + 1;
 
     public void handleSaveButton(ActionEvent actionEvent) throws IOException {
         try {
-            int productId = 0;
             String productName = ProdNameTextField.getText();
             Double productPrice = Double.parseDouble(ProdPriceTextField.getText());
             int inv = Integer.parseInt(ProdInvTextField.getText());
@@ -63,7 +63,7 @@ public class AddProductController implements Initializable {
                     for (Part part : productParts) {
                         newProduct.addPart(part);
                     }
-                    newProduct.setId(Inventory.generateProductId());
+                    newProduct.setId(productId);
                     Inventory.addProduct(newProduct);
                     Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
                     Scene scene = new Scene(parent);
@@ -157,6 +157,7 @@ public class AddProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ProdIDTextField.setText(String.valueOf(productId));
         PartID.setCellValueFactory(new PropertyValueFactory<>("id"));
         PartName.setCellValueFactory(new PropertyValueFactory<>("name"));
         PartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));

@@ -52,6 +52,7 @@ public class MainController implements Initializable {
     private static Part selectedPart;
     private static int selectedPartIndex;
     public static Product selectedProduct;
+    public static int selectedProductIndex;
     private Parent scene;
 
     public static Part getSelectedPart() {
@@ -65,6 +66,8 @@ public class MainController implements Initializable {
     public static Product getSelectedProduct() {
         return selectedProduct;
     }
+
+    public static int getSelectedProductIndex() { return selectedProductIndex; }
 
     @FXML
     public void handleAddPartButton(ActionEvent event) throws IOException {
@@ -130,6 +133,7 @@ public class MainController implements Initializable {
 
     public void handleModifyProductButton(ActionEvent event) throws IOException {
         selectedProduct = ProductTable.getSelectionModel().getSelectedItem();
+        selectedProductIndex = getProductList().indexOf(selectedProduct);
         if (selectedProduct == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.APPLICATION_MODAL);
