@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,9 +33,6 @@ public class MainController implements Initializable {
     @FXML private TableColumn<Part, String> PartName;
     @FXML private TableColumn<Part, Integer> PartInvLevel;
     @FXML private TableColumn<Part, Double> PartPrice;
-    @FXML private Button AddPartButton;
-    @FXML private Button ModifyPartButton;
-    @FXML private Button DeletePartButton;
     @FXML private TextField PartSearch;
     // Products Table
     @FXML private TableView<Product> ProductTable;
@@ -44,16 +40,11 @@ public class MainController implements Initializable {
     @FXML private TableColumn<Product, String> ProductName;
     @FXML private TableColumn<Product, Integer> ProductInvLevel;
     @FXML private TableColumn<Product, Double> ProductPrice;
-    @FXML private Button AddProductButton;
-    @FXML private Button ModifyProductButton;
-    @FXML private Button DeleteProductButton;
     @FXML private TextField ProductSearch;
-    @FXML private Button ExitButton;
     private static Part selectedPart;
     private static int selectedPartIndex;
     public static Product selectedProduct;
     public static int selectedProductIndex;
-    private Parent scene;
 
     public static Part getSelectedPart() {
         return selectedPart;

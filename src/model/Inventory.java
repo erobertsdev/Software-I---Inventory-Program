@@ -3,13 +3,13 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Locale;
+
 public class Inventory {
 
     // ObservableLists for test data and parts/products
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
     public static ObservableList<Product> allProducts = FXCollections.observableArrayList();
-    private static int partId = 0;
-    private static int prodId = allProducts.size();
 
     // Add part method
     public static void addPart(Part part) {
@@ -35,7 +35,7 @@ public class Inventory {
     public static ObservableList<Part> findPartByName(String partName) {
         ObservableList<Part> parts = FXCollections.observableArrayList();
         for (Part part : allParts) {
-            if (part.getName().contains(partName)) {
+            if (part.getName().toLowerCase().contains(partName.toLowerCase())) {
                 parts.add(part);
             }
         }
@@ -67,7 +67,7 @@ public class Inventory {
     public static ObservableList<Product> findProductByName(String productName) {
         ObservableList<Product> products = FXCollections.observableArrayList();
         for (Product product : allProducts){
-            if(product.getName().contains(productName)){
+            if(product.getName().toLowerCase().contains(productName.toLowerCase())){
                 products.add(product);
             }
         }

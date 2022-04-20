@@ -43,10 +43,8 @@ public class ModifyProductController implements Initializable {
     @FXML private TextField MinTextField;
     @FXML private TextField IDTextField;
     @FXML private TextField SearchField;
-    private Product selectedProduct;
-    private int productIndex = getSelectedProductIndex();
+    private final int productIndex = getSelectedProductIndex();
     private ObservableList<Part> associatedPart = FXCollections.observableArrayList();
-    private int productID;
 
     // TODO: Add search button to modify product form
     @FXML public void handleSearchButton(ActionEvent event) {
@@ -136,7 +134,7 @@ public class ModifyProductController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        selectedProduct = MainController.getSelectedProduct();
+        Product selectedProduct = MainController.getSelectedProduct();
         associatedPart = selectedProduct.getProductParts();
 
         PartID.setCellValueFactory(new PropertyValueFactory<>("id"));
