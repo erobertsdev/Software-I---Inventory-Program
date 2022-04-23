@@ -48,12 +48,12 @@ public class ModifyProductController implements Initializable {
 
     // TODO: Add search button to modify product form
     @FXML public void handleSearchButton(ActionEvent event) {
-        ObservableList<Part> foundPart = model.Inventory.findPartByName(SearchField.getText());
+        ObservableList<Part> foundPart = Inventory.findPartByName(SearchField.getText());
         if(foundPart.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.APPLICATION_MODAL);
-            alert.setTitle("NO MATCH");
-            alert.setHeaderText("Unable to locate a Part name with: " + SearchField.getText());
+            alert.setTitle("Part not found");
+            alert.setHeaderText(SearchField.getText() + " was not found.");
             alert.showAndWait();
         } else {
             PartTable.setItems(foundPart);

@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Inventory;
 import model.Part;
@@ -24,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class AddProductController implements Initializable {
     private ObservableList<Part> productParts = FXCollections.observableArrayList();
-    public TextField searchForParts;
+    public TextField SearchTextField;
     public TextField ProdIDTextField;
     public TextField ProdNameTextField;
     public TextField ProdInvTextField;
@@ -135,23 +136,15 @@ public class AddProductController implements Initializable {
     }
 
     public void handleSearchButton(ActionEvent actionEvent) {
-        ObservableList<Part> allParts = Inventory.getPartList();
-        ObservableList<Part> partsSearched = FXCollections.observableArrayList();
-        String searched = searchForParts.getText();
-
-        for (Part part : allParts) {
-            if (String.valueOf(part.getId()).contains(searched) || part.getName().contains(searched)) {
-                partsSearched.add(part);
-            }
-        }
-
-        PartTable.setItems(partsSearched);
-        if (partsSearched.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("No Parts Found");
-            alert.setHeaderText("No Parts Found");
-            alert.setContentText("No parts were found.");
+        ObservableList<Part> foundPart = Inventory.findPartByName(SearchTextField.getText());
+        if(foundPart.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.setTitle("Part not found");
+            alert.setHeaderText(SearchTextField.getText() + " was not found.");
             alert.showAndWait();
+        } else {
+            PartTable.setItems(foundPart);
         }
     }
 

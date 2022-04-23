@@ -3,13 +3,11 @@ package controller;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import model.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,10 +20,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import static controller.MainController.getSelectedPart;
 import static controller.MainController.getSelectedPartIndex;
-
 public class ModifyPartController implements Initializable {
 
     @FXML
@@ -121,7 +117,7 @@ public class ModifyPartController implements Initializable {
         }
     }
 
-    // Possible error: Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.PartIDTextField" is null
+    // TODO: Possible error: Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.PartIDTextField" is null
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         selectedPart = getSelectedPart();

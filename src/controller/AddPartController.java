@@ -3,20 +3,24 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
 import model.Outsourced;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-public class AddPartController {
+public class AddPartController implements Initializable {
 
     /**
      * Declare variables for UI components
@@ -87,13 +91,7 @@ public class AddPartController {
 
     }
 
-    public static int generateID() {
-        int newID = 1;
-        for (int i = 0; i < Inventory.getPartList().size(); i++) {
-            newID++;
-        }
-        return newID;
-    }
+    private static int newID = Inventory.getPartList().size() + 1;
 
     // Regex to check if certain inputs are numbers
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
@@ -128,7 +126,7 @@ public class AddPartController {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory amount must be between minimum and maximum values.");
                 alert.showAndWait();
             } else {
-                int id = generateID();
+                int id = Inventory.getPartList().size() + 1;
                 int inventory = Integer.parseInt(partInv);
                 double cost = Double.parseDouble(partPrice);
                 int max = Integer.parseInt(partMax);
@@ -168,5 +166,10 @@ public class AddPartController {
             stage.setScene(new Scene((Parent) scene));
             stage.show();
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    IDTextField.setText(String.valueOf("Auto-generated"));
     }
 }

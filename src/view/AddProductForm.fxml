@@ -21,7 +21,7 @@
       <TextField id="ProdPriceTextField" fx:id="ProdPriceTextField" layoutX="113.0" layoutY="225.0" prefHeight="25.0" prefWidth="72.0" />
       <TextField id="ProdMaxTextField" fx:id="ProdMaxTextField" layoutX="113.0" layoutY="263.0" prefHeight="25.0" prefWidth="72.0" />
       <TextField id="ProdMinTextField" fx:id="ProdMinTextField" layoutX="251.0" layoutY="263.0" prefHeight="25.0" prefWidth="72.0" />
-      <TextField id="SearchTextField" fx:id="SearchTextField" layoutX="612.0" layoutY="26.0" prefHeight="25.0" prefWidth="175.0" promptText="Search by Part ID or Name" />
+      <TextField id="SearchTextField" fx:id="SearchTextField" layoutX="612.0" layoutY="26.0" onAction="#handleSearchButton" prefHeight="25.0" prefWidth="175.0" promptText="Search by Part ID or Name" />
       <Label layoutX="49.0" layoutY="121.0" text="ID" />
       <Label layoutX="49.0" layoutY="157.0" text="Name" />
       <Label layoutX="49.0" layoutY="193.0" text="Inv" />
