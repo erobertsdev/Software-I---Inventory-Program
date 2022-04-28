@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 import static model.Inventory.getPartList;
 import static model.Inventory.getProductList;
 
+/** Controller for the main screen of the application. */
 public class MainController implements Initializable {
 
     // Parts Table
@@ -46,20 +47,30 @@ public class MainController implements Initializable {
     public static Product selectedProduct;
     public static int selectedProductIndex;
 
+    /** Method to return the currently selected part.
+     * @return the currently selected part. */
     public static Part getSelectedPart() {
         return selectedPart;
     }
 
+    /** Method to return the index of the currently selected part.
+     * @return the index of the currently selected part. */
     public static int getSelectedPartIndex() {
         return selectedPartIndex;
     }
 
+    /** Method to return the currently selected product.
+     * @return the currently selected product. */
     public static Product getSelectedProduct() {
         return selectedProduct;
     }
 
+    /** Method to return the index of the currently selected product.
+     * @return index of selected product. */
     public static int getSelectedProductIndex() { return selectedProductIndex; }
 
+    /** Method to add a part to the inventory.
+     * @param event Add part button event.*/
     @FXML
     public void handleAddPartButton(ActionEvent event) throws IOException {
         Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\AddPartForm.fxml"))));
@@ -68,6 +79,8 @@ public class MainController implements Initializable {
         window.show();
     }
 
+    /** Method to modify an existing part.
+     * @param event Modify part button event. */
     public void handleModifyPartButton(ActionEvent event) throws IOException {
         selectedPart = PartTable.getSelectionModel().getSelectedItem();
         selectedPartIndex = getPartList().indexOf(selectedPart);
@@ -90,6 +103,8 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Method to delete an existing part.
+     * @param event Delete part event. */
     public void handleDeletePartButton(ActionEvent event) throws IOException {
         if (PartTable.getSelectionModel().isEmpty()){
             infoDialog("Delete Part", "Error","Please select a part to delete.");
@@ -101,6 +116,8 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Method to search for a part.
+     * @param event Search button or enter keypress event. */
     public void handlePartSearch(ActionEvent event) throws IOException {
         ObservableList<Part> partSearchText = Inventory.findPartByName(PartSearch.getText());
         if(partSearchText.isEmpty()) {
@@ -114,6 +131,8 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Method to add product to inventory.
+     * @param event Add product button event. */
     public void handleAddProductButton(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\AddProductForm.fxml")));
         Scene scene = new Scene(parent);
@@ -122,6 +141,8 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /** Method to modify an existing product.
+     * @param event Modify product event. */
     public void handleModifyProductButton(ActionEvent event) throws IOException {
         selectedProduct = ProductTable.getSelectionModel().getSelectedItem();
         selectedProductIndex = getProductList().indexOf(selectedProduct);
@@ -140,18 +161,24 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Method to delete an existing product.
+     * @param event Modify product button event. */
     public void handleDeleteProductButton(ActionEvent event) throws IOException {
-        if (ProductTable.getSelectionModel().isEmpty()){
+        Product selectedProduct = ProductTable.getSelectionModel().getSelectedItem();
+        if (selectedProduct == null){
             infoDialog("Delete Product", "Error","Please select a product to delete.");
-            return;
-        }
-        if (confirmDialog("Delete Product", "Are you sure you want to delete this product?")){
-            int selectedPart = ProductTable.getSelectionModel().getSelectedIndex();
-            ProductTable.getItems().remove(selectedPart);
+        } else if (!selectedProduct.getProductParts().isEmpty()) {
+            infoDialog("Delete Product", "Error","All associated parts must be removed before product can be deleted.");
+        } else {
+            if (confirmDialog("Delete Product", "Are you sure you want to delete this product?")) {
+                int selectedPart = ProductTable.getSelectionModel().getSelectedIndex();
+                ProductTable.getItems().remove(selectedPart);
+            }
         }
     }
 
-    // TODO: Fix product search
+    /** Method to search for a product.
+     * @param event Search button or enter keypress event. */
     public void handleProductSearch(ActionEvent event) throws IOException {
         ObservableList<Product> productSearchText = Inventory.findProductByName(ProductSearch.getText());
         if(productSearchText.isEmpty()) {
@@ -165,6 +192,8 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Method to exit the program.
+     * @param event Exit button event.*/
     public void handleExitButton(ActionEvent event) throws IOException {
         confirmDialog("Close Program", "Are you sure you want to exit?");
         {
@@ -172,6 +201,9 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Method to create a GUI dialog box.
+     * @param content Description of what the dialog box is for.
+     * @param title Title of the event for the dialog box */
     static boolean confirmDialog(String title, String content){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -181,6 +213,10 @@ public class MainController implements Initializable {
         return result.get() == ButtonType.OK;
     }
 
+    /** Method to create a dialog box.
+     * @param title Title of the dialog box.
+     * @param content Content of the dialog box.
+     * @param header Header of the dialog box. */
     static void infoDialog(String title, String header, String content){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -189,6 +225,7 @@ public class MainController implements Initializable {
         alert.showAndWait();
     }
 
+    /** Method to initialize the GUI. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // TODO: Runtime error possibility here, controller.MainController.PartTable is null, there was no fx:id in FXML file

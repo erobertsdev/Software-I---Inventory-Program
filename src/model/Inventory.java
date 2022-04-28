@@ -3,28 +3,29 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.Locale;
-
+/** Model for the current inventory. */
 public class Inventory {
-
-    // ObservableLists for test data and parts/products
-    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private static final ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     public static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
-    // Add part method
+    /** Method to add a part to the inventory.
+     * @param part Part to be added.*/
     public static void addPart(Part part) {
-        allParts.add(part);
+        associatedParts.add(part);
     }
 
-    // Add product method
+    /** Method to a dd a product to the inventory.
+     * @param product Product to be added. */
     public static void addProduct(Product product) {
         allProducts.add(product);
     }
 
-    // Find part by ID
+    /** Method to find a part by ID.
+     * @param partID ID to be searched for.
+     * @return foundPart returns a part if found. */
     public static Part findPartByID(int partID) {
         Part foundPart = null;
-        for (Part part : allParts) {
+        for (Part part : associatedParts) {
             if (partID == part.getId()) {
                 foundPart = part;
             }
@@ -32,9 +33,12 @@ public class Inventory {
         return foundPart;
     }
 
+    /** Method to search for part by name.
+     * @param partName Text to be searched for.
+     * @return parts returns list of parts with the search term included. */
     public static ObservableList<Part> findPartByName(String partName) {
         ObservableList<Part> parts = FXCollections.observableArrayList();
-        for (Part part : allParts) {
+        for (Part part : associatedParts) {
             if (part.getName().toLowerCase().contains(partName.toLowerCase()) ||
                     (String.valueOf(part.getId()).contains(partName))) {
                 parts.add(part);
@@ -43,17 +47,22 @@ public class Inventory {
         return parts;
     }
 
-    // Modify Part
+    /** Method to modify an existing part.
+     * @param index Index of part to be modified.
+     * @param selectedPart The currently selected part. */
     public static void modifyPart(int index, Part selectedPart) {
-        allParts.set(index, selectedPart);
+        associatedParts.set(index, selectedPart);
     }
 
-    // Delete Part
+    /** Method to delete a part.
+     * @param selectedPart The currently selected part. */
     public static boolean deletePart(Part selectedPart) {
-        return allParts.remove(selectedPart);
+        return associatedParts.remove(selectedPart);
     }
 
-    // Find product by ID
+    /** Method to find a product by ID.
+     * @param productID ID to be searched for.
+     * @return foundProduct returns a product with the ID that was searched for. */
     public static Product findProductByID(int productID) {
         Product foundProduct = null;
         for (Product product : allProducts) {
@@ -64,7 +73,9 @@ public class Inventory {
         return foundProduct;
     }
 
-    // Find Product by Name
+    /** Method to find a product by name.
+     * @param productName Name to be searched for.
+     * @return products returns list of products with the search term included */
     public static ObservableList<Product> findProductByName(String productName) {
         ObservableList<Product> products = FXCollections.observableArrayList();
         for (Product product : allProducts){
@@ -77,32 +88,35 @@ public class Inventory {
         return products;
     }
 
-    // Modify Product
+    /** Method to modify an exising product.
+     * @param index Index of product to be modified.
+     * @param selectedProduct The currently selected product. */
     public static void modifyProduct(int index, Product selectedProduct) {
         allProducts.set(index, selectedProduct);
     }
 
-    // Delete Product
+    /** Method to delete an existing product.
+     * @param selectedProduct The currently selected product.
+     * @return Returns list of products with the deleted one removed. */
     public static boolean deleteProduct(Product selectedProduct) {
         return allProducts.remove(selectedProduct);
     }
 
-    // Update Part
+    /** Method to update an exisint product.
+     * @param index Index of product to be modified.
+     * @param selectedPart The currently selected product. */
     public static void updatePart(int index, Part selectedPart){
-        allParts.set(index, selectedPart);
+        associatedParts.set(index, selectedPart);
     }
 
-    // updateProduct
-    public static void updateProduct(int index, Product newProduct){
-        allProducts.set(index, newProduct);
-    }
-
-    // Return list of all parts
+    /** Method to return all parts in a product.
+     * @return associatedParts returns all parts in a product. */
     public static ObservableList<Part> getPartList() {
-        return allParts;
+        return associatedParts;
     }
 
-    // Return list of all products
+    /** Method to return list of all products.
+     * @return allProducts returns all current products. */
     public static ObservableList<Product> getProductList() {
         return allProducts;
     }

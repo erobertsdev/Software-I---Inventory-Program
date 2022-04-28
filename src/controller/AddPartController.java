@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
@@ -20,11 +19,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+/** This class adds a part to the inventory. */
 public class AddPartController implements Initializable {
-
-    /**
-     * Declare variables for UI components
-     **/
 
     @FXML
     private RadioButton InHouseRadioButton;
@@ -46,56 +42,25 @@ public class AddPartController implements Initializable {
     private TextField MachineIDTextField;
     @FXML
     private Label MachineCompanyLabel;
-    @FXML
-    private Button SaveButton;
-    @FXML
-    private Button CancelButton;
 
-    /**
-     * Event Handlers
-     **/
+    /** Sets MachineCompanyLabel label to 'Machine ID'. */
     @FXML
     public void handleInHouseRadioButton() {
         MachineCompanyLabel.setText("Machine ID");
     }
-
+    /** Sets MachineCompanyLabel label to 'Company Name'. */
     public void handleOutsourcedRadioButton() {
         MachineCompanyLabel.setText("Company Name");
     }
-
-    public void handleIDTextField() {
-
-    }
-
-    public void handleNameTextField() {
-
-    }
-
-    public void handleInvTextField() {
-
-    }
-
-    public void handlePriceTextField() {
-
-    }
-
-    public void handleMaxTextField() {
-
-    }
-
-    public void handleMachineIDTextField() {
-
-    }
-
-    public void handleMinTextField() {
-
-    }
-
+    /** Sets ID for a new part. */
     private static int newID = Inventory.getPartList().size() + 1;
 
-    // Regex to check if certain inputs are numbers
+    /** Regex to check if input value is numerical. */
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
+    /** Method to check if a value is numerical.
+     * @param strNum input value to be checked.
+     * @return True if strNum is a number, false otherwise.*/
     public boolean isNumeric(String strNum) {
         if (strNum == null) {
             return true;
@@ -103,6 +68,9 @@ public class AddPartController implements Initializable {
         return !pattern.matcher(strNum).matches();
     }
 
+    /** Method to save a new part.
+     * @param event Save part event.
+     * @throws NumberFormatException if input values are invalid. */
     public void handleSaveButton(ActionEvent event) throws IOException {
         String partID = IDTextField.getText();
         String partName = NameTextField.getText();
@@ -157,6 +125,9 @@ public class AddPartController implements Initializable {
         }
     }
 
+    /** Method to cancel the addition of a new part.
+     * @param event Cancel adding part event.
+     * @throws IOException if an error occurs. */
     public void handleCancelButton(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to cancel?");
         Optional<ButtonType> result = alert.showAndWait();
@@ -168,6 +139,7 @@ public class AddPartController implements Initializable {
         }
     }
 
+    /** Initializes GUI for adding a part. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     IDTextField.setText(String.valueOf("Auto-generated"));

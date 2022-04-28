@@ -3,6 +3,7 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/** Model for a product.  */
 public class Product {
     private ObservableList<Part> productParts = FXCollections.observableArrayList();
     private int id;
@@ -20,7 +21,7 @@ public class Product {
         this.max = max;
     }
 
-    // Default Params
+    /** Sets default parameters for a product if they're not included. */
     public Product() {
         this(0, null, 0.00, 0, 0, 0);
     }
@@ -109,16 +110,20 @@ public class Product {
         this.max = max;
     }
 
+    /** Method to add a part to a product.
+     * @param part the part to be added. */
     public void addPart(Part part) {
         productParts.add(part);
     }
 
-    // Add part to product
+    /** Method to add a part to a product.
+     * @param part part to be added. */
     public void addProductPart(ObservableList<Part> part) {
         this.productParts.addAll(part);
     }
 
-    // Return all parts in product
+    /** Return all parts in a product.
+     * @return productParts All of the parts in a product. */
     public ObservableList<Part> getProductParts() {
         return productParts;
     }

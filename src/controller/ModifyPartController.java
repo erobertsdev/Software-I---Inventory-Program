@@ -8,6 +8,8 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +24,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import static controller.MainController.getSelectedPart;
 import static controller.MainController.getSelectedPartIndex;
+
+/** Controller for the part modification screen. */
 public class ModifyPartController implements Initializable {
 
     @FXML
@@ -46,7 +50,18 @@ public class ModifyPartController implements Initializable {
     private Label MachineCompanyLabel;
     private Part selectedPart;
     private static int selectedPartIndex;
+    private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
+    /** Method to check if a value is numerical.
+     * @param strNum Input to be checked. */
+    public boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return true;
+        }
+        return !pattern.matcher(strNum).matches();
+    }
+
+    /** Method to handle InHouse radio button. */
     @FXML
     public void handleInHouseRadioButton() {
         InHouseRadioButton.setSelected(true);
@@ -54,14 +69,16 @@ public class ModifyPartController implements Initializable {
         MachineCompanyLabel.setText("Machine ID");
     }
 
+    /** Method to handle outsourced radio button. */
     @FXML
     public void handleOutsourcedRadioButton() {
         InHouseRadioButton.setSelected(false);
         OutsourcedRadioButton.setSelected(true);
-        MachineCompanyLabel.setText("Company");
+        MachineCompanyLabel.setText("Company Name");
     }
 
-
+    /** Method to handle cancelling modification of a part.
+     * @param event Cancel button event.*/
     @FXML
     public void handleCancelButton(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Cancel Changes?");
@@ -74,25 +91,39 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    /** Method to handle saving of modification to a part.
+     * @param event Save button event. */
     @FXML
     public void handleSaveButton(ActionEvent event) throws IOException {
         int partId = selectedPart.getId();
         int partIndex = selectedPartIndex;
         String partName = PartNameTextField.getText();
-        Double partPrice = Double.parseDouble(PartPriceTextField.getText());
-        int partInv = Integer.parseInt(PartInvTextField.getText());
-        int partMin = Integer.parseInt(PartMinTextField.getText());
-        int partMax = Integer.parseInt(PartMaxTextField.getText());
+        String partPrice = PartPriceTextField.getText();
+        String partInv = PartInvTextField.getText();
+        String partMin = PartMinTextField.getText();
+        String partMax = PartMaxTextField.getText();
         int machineId;
         String companyName;
         if (partName.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Part name cannot be empty.");
             Optional<ButtonType> result = alert.showAndWait();
-        } else if ((partMin < partMax) && (partInv > partMin) && (partInv < partMax)) {
+        } else if (isNumeric(partInv)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Inv must be a number.");
+            alert.showAndWait();
+        } else if (isNumeric(partPrice)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Price is invalid.");
+            alert.showAndWait();
+        } else if (Integer.parseInt(partMin) > Integer.parseInt(partMax)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "MIN value can't be greater than MAX value.");
+            alert.showAndWait();
+        } else if (Integer.parseInt(partInv) > Integer.parseInt(partMax) || Integer.parseInt(partInv) < Integer.parseInt(partMin)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory amount must be between minimum and maximum values.");
+            alert.showAndWait();
+        } else {
             if (InHouseRadioButton.isSelected()) {
                 try {
                     machineId = Integer.parseInt(MachineIDTextField.getText());
-                    InHouse modifyInHouse = new InHouse(partId, partName, partPrice, partInv, partMin, partMax, machineId);
+                    InHouse modifyInHouse = new InHouse(partId, partName, Double.parseDouble(partPrice), Integer.parseInt(partInv), Integer.parseInt(partMin), Integer.parseInt(partMax), machineId);
                     Inventory.updatePart(partIndex, modifyInHouse);
                     Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
                     Scene scene = new Scene(parent);
@@ -106,7 +137,7 @@ public class ModifyPartController implements Initializable {
             }
             if (OutsourcedRadioButton.isSelected()) {
                 companyName = MachineIDTextField.getText();
-                Outsourced newOutsourced = new Outsourced(partId, partName, partPrice, partInv, partMin, partMax, companyName);
+                Outsourced newOutsourced = new Outsourced(partId, partName, Double.parseDouble(partPrice), Integer.parseInt(partInv), Integer.parseInt(partMin), Integer.parseInt(partMax), companyName);
                 Inventory.updatePart(partIndex, newOutsourced);
                 Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
                 Scene scene = new Scene(parent);
@@ -117,7 +148,9 @@ public class ModifyPartController implements Initializable {
         }
     }
 
-    // TODO: Possible error: Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.PartIDTextField" is null
+    /** Method to initialize the GUI for part modification.
+     * RUNTIME ERROR: Cannot invoke "javafx.scene.control.TextField.setText(String)" because "this.PartIDTextField" is null
+     * FIX: the appropriate fx:id had not been set in the ModifyPartForm.fxml file. */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         selectedPart = getSelectedPart();
@@ -129,7 +162,7 @@ public class ModifyPartController implements Initializable {
         }
         if (selectedPart instanceof Outsourced) {
             OutsourcedRadioButton.setSelected(true);
-            MachineCompanyLabel.setText("Company");
+            MachineCompanyLabel.setText("Company Name");
             MachineIDTextField.setText(String.valueOf(((Outsourced) selectedPart).getCompanyName()));
         }
         PartIDTextField.setText(String.valueOf(selectedPart.getId()));

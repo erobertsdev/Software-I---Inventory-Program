@@ -10,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Inventory;
@@ -23,8 +22,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** Controller for adding a new product. */
 public class AddProductController implements Initializable {
-    private ObservableList<Part> productParts = FXCollections.observableArrayList();
+    private final ObservableList<Part> productParts = FXCollections.observableArrayList();
     public TextField SearchTextField;
     public TextField ProdIDTextField;
     public TextField ProdNameTextField;
@@ -44,10 +44,12 @@ public class AddProductController implements Initializable {
     public TableColumn<Part, Double> AssociatedPartPrice;
     int productId = Inventory.allProducts.size() + 1;
 
+    /** Method for saving a new product.
+     * @param actionEvent Save product button event. */
     public void handleSaveButton(ActionEvent actionEvent) throws IOException {
         try {
             String productName = ProdNameTextField.getText();
-            Double productPrice = Double.parseDouble(ProdPriceTextField.getText());
+            double productPrice = Double.parseDouble(ProdPriceTextField.getText());
             int inv = Integer.parseInt(ProdInvTextField.getText());
             int min = Integer.parseInt(ProdMinTextField.getText());
             int max = Integer.parseInt(ProdMaxTextField.getText());
@@ -59,7 +61,20 @@ public class AddProductController implements Initializable {
                 alert.setContentText("Part name cannot be empty.");
                 alert.showAndWait();
             } else {
-                if ((min < max) && (inv < max) && (inv > min)) {
+                if (min > max) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Invalid Min/Max");
+                    alert.setHeaderText("Invalid Min/Max");
+                    alert.setContentText("Min value must be less than Max value.");
+                    alert.showAndWait();
+                } else if ((inv < min) || (inv > max)) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Invalid Inv Value");
+                    alert.setHeaderText("Invalid Inv Value");
+                    alert.setContentText("Inv value must fall between Min and Max.");
+                    alert.showAndWait();
+                }
+                else {
                     Product newProduct = new Product(productId, productName, productPrice, inv, min, max);
                     for (Part part : productParts) {
                         newProduct.addPart(part);
@@ -83,6 +98,8 @@ public class AddProductController implements Initializable {
 
     }
 
+    /** Method for cancelling addition of a product.\
+     * @param actionEvent Cancel button event.*/
     public void handleCancelButton(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit");
@@ -98,6 +115,8 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /** Method for adding a part to a product.
+     * @param actionEvent Add part button event.*/
     public void handleAddPartButton(ActionEvent actionEvent) {
         Part thisPart = PartTable.getSelectionModel().getSelectedItem();
 
@@ -113,6 +132,8 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /** Method for removing a part from a product.
+     * @param actionEvent Remove part button event.*/
     public void handleRemovePartButton(ActionEvent actionEvent) {
         Part selectedPart = AssociatedPart.getSelectionModel().getSelectedItem();
         if (selectedPart == null) {
@@ -135,6 +156,8 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /** Method for searching for a part.
+     * @param actionEvent Search button or enter key event. */
     public void handleSearchButton(ActionEvent actionEvent) {
         ObservableList<Part> foundPart = Inventory.findPartByName(SearchTextField.getText());
         if(foundPart.isEmpty()) {
@@ -148,6 +171,7 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /** Method to initialize the GUI. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ProdIDTextField.setText(String.valueOf(productId));

@@ -20,9 +20,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import static controller.MainController.getSelectedProductIndex;
 
+/** Class to modify an existing product. */
 public class ModifyProductController implements Initializable {
     private Stage stage;
     private Object scene;
@@ -45,8 +47,19 @@ public class ModifyProductController implements Initializable {
     @FXML private TextField SearchField;
     private final int productIndex = getSelectedProductIndex();
     private ObservableList<Part> associatedPart = FXCollections.observableArrayList();
+    private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
-    // TODO: Add search button to modify product form
+    /** Method to check if an input value is numerical.
+     * @param strNum The value to be checked. */
+    public boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return true;
+        }
+        return !pattern.matcher(strNum).matches();
+    }
+
+    /** Method to search for a part.
+     * @param event Search button event. */
     @FXML public void handleSearchButton(ActionEvent event) {
         ObservableList<Part> foundPart = Inventory.findPartByName(SearchField.getText());
         if(foundPart.isEmpty()) {
@@ -60,6 +73,8 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /** Method to cancel modification of a product.
+     * @param event Cancel button event. */
     @FXML public void handleCancelButton(ActionEvent event) throws IOException {
         if (MainController.confirmDialog("Cancel", "Cancel modifying this product?")) {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -69,6 +84,8 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /** Method to save modifications made to a part.
+     * @param event Save button event. */
     @FXML void handleSaveButton(ActionEvent event) throws IOException {
         String productName = NameTextField.getText();
         String productInv = InvTextField.getText();
@@ -76,29 +93,59 @@ public class ModifyProductController implements Initializable {
         String productMin = MinTextField.getText();
         String productMax = MaxTextField.getText();
         try {
-                Product newProduct = new Product();
-                newProduct.setId(productIndex + 1);
-                newProduct.setName(productName);
-                newProduct.setPrice(Double.parseDouble(productPrice));
-                newProduct.setStock(Integer.parseInt(productInv));
-                newProduct.setMin(Integer.parseInt(productMin));
-                newProduct.setMax(Integer.parseInt(productMax));
-                newProduct.addProductPart(associatedPart);
-                Inventory.modifyProduct(productIndex, newProduct);
+            if (isNumeric(productInv) || isNumeric(productPrice) || isNumeric(productMin) || isNumeric(productMax)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Invalid entry");
+                alert.setHeaderText("Check all values");
+                alert.setContentText("Inv, Price, Min and Max must be numbers.");
+                alert.showAndWait();
+            } else {
+                if (productName.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Enter a part name");
+                    alert.setHeaderText("Enter a part name");
+                    alert.setContentText("Part name cannot be empty.");
+                    alert.showAndWait();
+                } else if (Integer.parseInt(productMin) > Integer.parseInt(productMax)) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Invalid Min/Max Value");
+                    alert.setHeaderText("Invalid Min/Max Value");
+                    alert.setContentText("Min value must be less than Max value.");
+                    alert.showAndWait();
+                } else if (Integer.parseInt(productInv) < Integer.parseInt(productMin) || Integer.parseInt(productInv) > Integer.parseInt(productMax)) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Invalid Inv Value");
+                    alert.setHeaderText("Invalid Inv Value");
+                    alert.setContentText("Inv must be between Min and Max values.");
+                    alert.showAndWait();
+                } else {
+                    Product newProduct = new Product();
+                    newProduct.setId(productIndex + 1);
+                    newProduct.setName(productName);
+                    newProduct.setPrice(Double.parseDouble(productPrice));
+                    newProduct.setStock(Integer.parseInt(productInv));
+                    newProduct.setMin(Integer.parseInt(productMin));
+                    newProduct.setMax(Integer.parseInt(productMax));
+                    newProduct.addProductPart(associatedPart);
+                    Inventory.modifyProduct(productIndex, newProduct);
+                    stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                    scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
+                    stage.setScene(new Scene((Parent) scene));
+                    stage.show();
+                }
+            }
+            } catch(NumberFormatException e){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText("Please check all fields.");
+                alert.showAndWait();
+            }
 
-                stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-                scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("..\\view\\MainForm.fxml")));
-                stage.setScene(new Scene((Parent) scene));
-                stage.show();
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("Please check all fields.");
-            alert.showAndWait();
-        }
     }
 
+    /** Method to add a part to a product.
+     * @param event Add part button event. */
     @FXML void handleAddButton(ActionEvent event) {
         Part selectedPart = PartTable.getSelectionModel().getSelectedItem();
         if(selectedPart != null) {
@@ -110,6 +157,8 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /** Method to remove a part from a product.
+     * @param event Remove part button event. */
     @FXML
     void handleRemoveButton(ActionEvent event) {
         Part selectedPart = AssociatedPartTable.getSelectionModel().getSelectedItem();
@@ -124,14 +173,12 @@ public class ModifyProductController implements Initializable {
         }
     }
 
-    public void updatePartTable() {
-        PartTable.setItems(model.Inventory.getPartList());
-    }
-
+    /** Method to update the parts table for a product. */
     private void updateAssociatedPartTable() {
         AssociatedPartTable.setItems(associatedPart);
     }
 
+    /** Method for the initialization of the GUI. */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Product selectedProduct = MainController.getSelectedProduct();
