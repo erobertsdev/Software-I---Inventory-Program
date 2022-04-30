@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 public class Inventory {
     private static final ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     public static ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    private static int partID = 0;
+    private static int prodID = 0;
 
     /** Method to add a part to the inventory.
      * @param part Part to be added.*/
@@ -88,7 +90,17 @@ public class Inventory {
         return products;
     }
 
-    /** Method to modify an exising product.
+    /** @return A unique part ID */
+    public static int newPartID() {
+        return ++partID;
+    }
+
+    /** @return A unique product ID */
+    public static int newProdID() {
+        return ++prodID;
+    }
+
+    /** Method to modify an existing product.
      * @param index Index of product to be modified.
      * @param selectedProduct The currently selected product. */
     public static void modifyProduct(int index, Product selectedProduct) {

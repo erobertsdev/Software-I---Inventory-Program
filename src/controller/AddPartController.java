@@ -52,8 +52,9 @@ public class AddPartController implements Initializable {
     public void handleOutsourcedRadioButton() {
         MachineCompanyLabel.setText("Company Name");
     }
+
     /** Sets ID for a new part. */
-    private static int newID = Inventory.getPartList().size() + 1;
+    private static int newID = Inventory.newPartID();
 
     /** Regex to check if input value is numerical. */
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
@@ -94,7 +95,7 @@ public class AddPartController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Inventory amount must be between minimum and maximum values.");
                 alert.showAndWait();
             } else {
-                int id = Inventory.getPartList().size() + 1;
+                int id = newID;
                 int inventory = Integer.parseInt(partInv);
                 double cost = Double.parseDouble(partPrice);
                 int max = Integer.parseInt(partMax);
@@ -103,13 +104,13 @@ public class AddPartController implements Initializable {
                 if (InHouseRadioButton.isSelected()) {
                     int machineID = Integer.parseInt(machineIDText);
                     InHouse addInHousePart = new InHouse(id, partName, cost, inventory, min, max, machineID);
-
+                    addInHousePart.setId(Inventory.newPartID());
                     Inventory.addPart(addInHousePart);
                 }
                 if (OutsourcedRadioButton.isSelected()) {
                     Outsourced addOutsourcedPart = new Outsourced(id, partName, cost, inventory,
                             min, max, machineIDText);
-
+                    addOutsourcedPart.setId(Inventory.newPartID());
                     Inventory.addPart(addOutsourcedPart);
                 }
                 Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();

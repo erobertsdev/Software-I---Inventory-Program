@@ -42,7 +42,7 @@ public class AddProductController implements Initializable {
     public TableColumn<Part, String> AssociatedPartName;
     public TableColumn<Part, Integer> AssociatedPartInv;
     public TableColumn<Part, Double> AssociatedPartPrice;
-    int productId = Inventory.allProducts.size() + 1;
+    int productId = Inventory.newProdID();
 
     /** Method for saving a new product.
      * @param actionEvent Save product button event. */
