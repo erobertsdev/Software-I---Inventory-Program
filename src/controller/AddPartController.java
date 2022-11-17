@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 /** This class adds a part to the inventory. */
+/** @author Elias Adams-Roberts */
 public class AddPartController implements Initializable {
 
     @FXML

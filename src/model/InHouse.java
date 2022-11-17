@@ -1,5 +1,5 @@
 package model;
-
+/** @author Elias Adams-Roberts */
 /** Model for an in house part. */
 public class InHouse extends Part {
     private int machineID;
