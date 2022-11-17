@@ -3,6 +3,7 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/** @author Elias Adams-Roberts */
 /** Model for the current inventory. */
 public class Inventory {
     private static final ObservableList<Part> associatedParts = FXCollections.observableArrayList();

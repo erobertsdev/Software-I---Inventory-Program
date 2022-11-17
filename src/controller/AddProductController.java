@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** @author Elias Adams-Roberts */
 /** Controller for adding a new product. */
 public class AddProductController implements Initializable {
     private final ObservableList<Part> productParts = FXCollections.observableArrayList();
