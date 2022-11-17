@@ -16,6 +16,7 @@ import java.util.Objects;
  * delete and modify parts and products.
  * Javadocs are located in "javadoc" directory.
  * @author Elias Adams-Roberts
+ * @version 1.0
  * FUTURE ENHANCEMENT: Connect the application to a database or use local storage to provide data persistence.
  * RUNTIME ERROR: I ran into multiple instances where javafx scenes could not be invoked because of null values, the fix
  * was adding the appropriate fx:id values needed to the fxml files. */
